@@ -83,7 +83,7 @@ class Second extends Component {
           </View>
           <View style={{flex:1}}>
             <TouchableOpacity style={styles.buttonContainer}
-              onPress={()=>{this.props.navigation.push('ThirdScreen')}}>
+              onPress={()=>{this.props.navigation.navigate('ThirdScreen')}}>
               <Text style={styles.buttonText}>
                 Show
               </Text>
