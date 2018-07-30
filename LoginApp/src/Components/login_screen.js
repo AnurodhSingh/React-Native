@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   },
   inputCell:{
     flexDirection:'row',
-    margin:15,
+    padding:15,
     width:250,
   },
   icons:{
