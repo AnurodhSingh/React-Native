@@ -79,6 +79,7 @@ class LoginScreen extends Component {
             <Icons name="lock" size={20} color="#000000" style={styles.icons}/>
             <TextInput
               value = {this.state.password}
+              secureTextEntry={true}
               style={styles.inputBox}
               autoCapitalize="none" 
               onChangeText={(text) => this.setState({password:text})} 

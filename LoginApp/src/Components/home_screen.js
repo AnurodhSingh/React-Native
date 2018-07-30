@@ -15,7 +15,6 @@ class HomeScreen extends Component {
       gender:'male',
       imageSource:null,
       index:-1,
-      imageSource:null
     }
   }
   componentWillMount()

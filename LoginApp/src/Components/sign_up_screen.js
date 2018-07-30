@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import {View,Text,TouchableOpacity,StyleSheet,Image,TextInput,ScrollView,FlatList} from 'react-native';
+import {View,Text,TouchableOpacity,StyleSheet,Image,TextInput,ScrollView} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/SimpleLineIcons';
+import Plus from 'react-native-vector-icons/Entypo';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
@@ -96,7 +97,10 @@ class SignUpScreen extends Component {
             style={[styles.imageCircle]}
             onPress={()=>this.show()}
           >
-          {this.state.imageSource === null ? <Text>Select a Photo</Text> : <Image style={styles.image} source={this.state.imageSource}/>}
+          {this.state.imageSource === null ? <Text style={{top:20}}>Select a Photo</Text> : <Image style={styles.image} source={this.state.imageSource}/>}
+          <View style={{backgroundColor:'#00f5b9',height:30,width:30,top:40,left:40,borderRadius:15}}>
+            <Plus name='plus' size={30} color='white'/>
+          </View>
           </TouchableOpacity>
         </View>
         <View style={styles.formContainer}>
@@ -115,6 +119,7 @@ class SignUpScreen extends Component {
             <Icons name="lock" size={20} color="#000000" style={styles.icons}/>
             <TextInput
               value = {this.state.password}
+              secureTextEntry={true}
               style={styles.inputBox}
               autoCapitalize="none" 
               onChangeText={(text) => this.setState({password:text})} 
