@@ -97,10 +97,17 @@ class SignUpScreen extends Component {
             style={[styles.imageCircle]}
             onPress={()=>this.show()}
           >
-          {this.state.imageSource === null ? <Text style={{top:20}}>Select a Photo</Text> : <Image style={styles.image} source={this.state.imageSource}/>}
-          <View style={{backgroundColor:'#00f5b9',height:30,width:30,top:40,left:40,borderRadius:15}}>
-            <Plus name='plus' size={30} color='white'/>
-          </View>
+            {this.state.imageSource === null ? 
+            <View style={{position:'absolute'}}>
+              <Text>Select a Photo</Text>     
+            </View> :
+            <View style={{position:'absolute'}}>
+              <Image style={styles.image} source={this.state.imageSource}/>
+            </View>
+            }
+            <View style={{backgroundColor:'#00f5b9',height:30,width:30,top:45,left:45,borderRadius:15,postion:'absolute'}}>
+              <Plus name='plus' size={30} color='white'/>
+            </View>
           </TouchableOpacity>
         </View>
         <View style={styles.formContainer}>
