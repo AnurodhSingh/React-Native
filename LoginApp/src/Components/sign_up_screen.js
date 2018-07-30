@@ -86,8 +86,7 @@ class SignUpScreen extends Component {
     }
   }
   render() {
-    return (
-      
+    return (   
       <ScrollView style={styles.container}>
         <View style={styles.headingContainer}>
           <Text style={styles.heading}>REGISTRATION SCREEN</Text>
@@ -205,7 +204,7 @@ const styles = StyleSheet.create({
   },
   headingContainer: {
     flex:1,
-    marginTop:20,
+    paddingTop:20,
     padding:10,
     alignItems:'center',
   },
@@ -229,7 +228,8 @@ const styles = StyleSheet.create({
     borderColor:"rgb(0,230,170)", 
     shadowOffset:{  width: 0,  height: 1},
     shadowOpacity: 0.5,
-    shadowRadius: 10,
+    shadowRadius: 8,
+    elevation:15,
   },
   image:{
     borderRadius: 60,
@@ -244,15 +244,16 @@ const styles = StyleSheet.create({
   },
   inputCell:{
     flexDirection:'row',
-    margin:15,
+    alignItems:'center',
+    justifyContent:'center',
     width:250,
   },
   icons:{
     marginRight:10,
   },
   inputBox:{
+    padding:15,
     width:200,
-    height:25,
     fontSize:15,
     borderBottomWidth:1,
     borderBottomColor:'#a8abaf'

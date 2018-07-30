@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import {View,Text,TouchableOpacity,StyleSheet,Image,TextInput,ScrollView,} from 'react-native';
+import {View,Text, StyleSheet,Image,ScrollView,} from 'react-native';
 import { connect } from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Icons from 'react-native-vector-icons/SimpleLineIcons';
 
 class HomeScreen extends Component {
   constructor(props){
