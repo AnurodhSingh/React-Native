@@ -150,18 +150,19 @@ const styles = StyleSheet.create({
   },
   inputCell:{
     flexDirection:'row',
-    padding:15,
+    alignItems:'center',
+    justifyContent:'center',
     width:250,
   },
   icons:{
     marginRight:10,
   },
   inputBox:{
+    padding:15,
     width:200,
-    height:25,
     fontSize:15,
     borderBottomWidth:1,
-    borderBottomColor:'grey'
+    borderBottomColor:'#a8abaf'
   },
   loginButtonContainer:{
     margin:15,

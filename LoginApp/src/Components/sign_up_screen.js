@@ -6,6 +6,8 @@ import Icons from 'react-native-vector-icons/SimpleLineIcons';
 import Plus from 'react-native-vector-icons/Entypo';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
 import LinearGradient from 'react-native-linear-gradient';
+import {BoxShadow} from 'react-native-shadow'
+
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as LoginAction from '../Actions/sign_up_screen'; 
