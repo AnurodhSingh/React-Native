@@ -90,7 +90,7 @@ export default class SigninComponent extends Component {
 			GoogleSignin.signIn().then((user)=>{
 				alert('Login Successfull');
 				this.setState({ user });
-				this.props.navigation.navigate('LogInSuccess');
+				this.props.navigation.navigate('HomeScreen');
 			}).catch(()=>{
 				alert('Login Fail');
 			})
@@ -113,7 +113,7 @@ export default class SigninComponent extends Component {
 			  } else {
 				alert('Login success with permissions: '
 				  +result.grantedPermissions.toString());
-				  this.props.navigation.navigate('LogInSuccess');
+				  this.props.navigation.navigate('HomeScreen');
 			  }
 			},
 			function(error) {

@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './style';
-import Video from 'react-native-video';
+import Video from 'react-native-video-controls';
 
 const video = require('@assets/local.mp4');
 export default class HomeComponent extends Component{

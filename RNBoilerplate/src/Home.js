@@ -10,6 +10,7 @@ import SplashScreen from './components/SplashScreen';
 import SigninContainer from './components/Signin/SigninContainer';
 import HomeContainer from './components/Home/HomeContainer';
 import LogInSuccess from './components/Home/LogInSuccess'
+import {Tab} from './components/Signin/TabScreen'
 
 const navigationOptions = {
 	headerStyle: {
@@ -29,9 +30,10 @@ const navigationOptions = {
 export default  Home = createStackNavigator({
 	
 	//SplashScreen: {screen: SplashScreen, navigationOptions: { header: null }},
-	SigninScreen: {screen:SigninContainer, navigationOptions:{header:null}},
-	HomeScreen: { screen: HomeContainer}, 
-	LogInSuccess : {screen : LogInSuccess}
+	//SigninScreen: {screen:SigninContainer, navigationOptions:{header:null}},
+	//HomeScreen: { screen: HomeContainer}, 
+	//LogInSuccess : {screen : LogInSuccess},
+	Tab: { screen : Tab},
 },{
 	headerMode: 'screen'
 }, {
