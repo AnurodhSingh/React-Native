@@ -1,0 +1,7 @@
+target 'RNBoilerplate' do
+  pod 'GoogleSignIn', '~> 4.1'
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  pod 'react-native-video', :path => '../node_modules/react-native-video'
+
+end
