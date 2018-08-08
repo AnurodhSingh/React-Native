@@ -193,12 +193,14 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   const {second} = state;
+  console.log('##############map state to props');
   return{
       data:second.entry
   }
 }
 
 function mapDispatchToProps(dispatch) {
+  console.log('map dispatch to props');
   return bindActionCreators(SecondAction, dispatch)
 }
 
