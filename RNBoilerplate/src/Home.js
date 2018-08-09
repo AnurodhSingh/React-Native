@@ -29,13 +29,13 @@ const navigationOptions = {
 
 export default  Home = createStackNavigator({
 	
-	//SplashScreen: {screen: SplashScreen, navigationOptions: { header: null }},
-	//SigninScreen: {screen:SigninContainer, navigationOptions:{header:null}},
-	//HomeScreen: { screen: HomeContainer}, 
-	//LogInSuccess : {screen : LogInSuccess},
-	Tab: { screen : Tab},
-},{
-	headerMode: 'screen'
-}, {
-	navigationOptions
+	SplashScreen: {screen: SplashScreen, navigationOptions: { header: null }},
+	SigninScreen: {screen:SigninContainer, navigationOptions:{header:null}},
+	HomeScreen: { screen: HomeContainer}, 
+	LogInSuccess : {screen : LogInSuccess},
+	Tab: { screen : Tab , navigationOptions: ({ navigation }) =>{
+			let focusedRouteName = navigation.state.routes[navigation.state.index].routeName;	
+			return {title:`${focusedRouteName} Page`}
+		}
+	}
 });	

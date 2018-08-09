@@ -34,43 +34,91 @@ const Library=<Feather name='headphones' size={25}/>
 const Bonus=<FontAwesome name='gift' size={25}/>
 const Settings=<Ionicons name='md-settings' size={25}/>
 
-const image='@assets/splash/splashScreenBg.png';
+const image='https://placeimg.com/200/200/animals';
 const i=[image,image,image];
 
 class HomeScreen extends Component{
 	constructor(props) {
 		super(props);
+		this.state={
+			entry:['https://placeimg.com/200/200/animals','https://loremflickr.com/320/240','https://loremflickr.com/320/240/dog','https://loremflickr.com/320/240/brazil,rio'],
+		}
 	};
-
-
+	_renderItem(item,index)
+	{
+		return(
+			<View>
+			  <Image 
+				  style={{height:150,width:150}}
+				  source={{uri:item}}
+			  />
+		  	</View>
+	  	)
+	}
 	render(){
 		return(
-		<View style={localStyles.screenContainer}>
-						<Image 
-							style={{height:100,width:100,}}
-							source={image}
-						/>
-			<Text>
-				Home
-			</Text>
-			<Carousel
-              ref={(c) => { this._carousel = c; }}
-              data={i}
-              renderItem={(item)=>{
-				  console.log("",item);
-				  return(
-					  <View style={{height:100,width:100, backgroundColor:'blue'}}>
-						<Image 
-							source={require(image)}
+		<ScrollView style={localStyles.screenContainer}>
+				<View style={localStyles.sliderContainer}>
+					<Text style={localStyles.sliderHeader}>
+						Continue Listening
+					</Text>
+					<View style={localStyles.CarouselContainer}>
+						<Carousel
+							firstItem={1}
+							data={this.state.entry}
+							renderItem={({item,index})=>this._renderItem(item,index)}
+							sliderWidth={400}
+							itemWidth={150}
+							layout={'default'}
 						/>
 					</View>
-				  )
-			 	 }
-			  }
-              sliderWidth={100}
-              itemWidth={100}
-            />
-		</View>
+				</View>
+				<View style={localStyles.sliderContainer}>
+					<Text style={localStyles.sliderHeader}>
+						Recently Added
+					</Text>
+					<View style={localStyles.CarouselContainer}>
+						<Carousel
+							firstItem={1}
+							data={this.state.entry}
+							renderItem={({item,index})=>this._renderItem(item,index)}
+							sliderWidth={400}
+							itemWidth={150}
+							layout={'default'}
+						/>
+					</View>
+				</View>
+				<View style={localStyles.sliderContainer}>
+					<Text style={localStyles.sliderHeader}>
+						Featured
+					</Text>
+					<View style={localStyles.CarouselContainer}>
+						<Carousel
+							firstItem={1}
+							data={this.state.entry}
+							renderItem={({item,index})=>this._renderItem(item,index)}
+							sliderWidth={400}
+							itemWidth={150}
+							layout={'default'}
+						/>
+					</View>
+				</View>
+				<View style={localStyles.sliderContainer}>
+					<Text style={localStyles.sliderHeader}>
+						Popular
+					</Text>
+					<View style={localStyles.CarouselContainer}>
+						<Carousel
+							firstItem={1}
+							data={this.state.entry}
+							renderItem={({item,index})=>this._renderItem(item,index)}
+							sliderWidth={400}
+							itemWidth={150}
+							layout={'default'}
+						/>
+					</View>
+				</View>
+		</ScrollView>
 		);
 	}
 }
@@ -78,6 +126,7 @@ class BrowseScreen extends Component{
 	constructor(props) {
 		super(props);
 	};
+	
 	render(){
 		return(
 		<View style={localStyles.screenContainer}>
@@ -131,57 +180,68 @@ class SettingsScreen extends Component{
 	}
 }
 
-
-
 export const Tab= createBottomTabNavigator({
-	Home:{screen:HomeScreen, navigationOptions: {
-        tabBarLabel: 'HOME',
-		tabBarIcon: Home
-		}
+		Home:{screen:HomeScreen},
+		Browse:{screen:BrowseScreen},
+		Library:{screen:LibraryScreen},
+		Bonus:{screen:BonusScreen},
+		Settings:{screen:SettingsScreen}
 	},
-	Browse:{screen:BrowseScreen , navigationOptions: {
-        tabBarLabel: 'BROWSE',
-		tabBarIcon: Browse
-		}
-	},
-	Library:{screen:LibraryScreen , navigationOptions: {
-        tabBarLabel: 'LIBRARY',
-		tabBarIcon: Library
-		}
-	},
-	Bonus:{screen:BonusScreen , navigationOptions: {
-        tabBarLabel: 'BONUS',
-		tabBarIcon: Bonus
-		}
-	},
-	Settings:{screen:SettingsScreen , navigationOptions: {
-        tabBarLabel: 'SETTINGS',
-		tabBarIcon: Settings
-		}
+	{
+	navigationOptions: ({ navigation }) => (
+		{title:'Hello'},
+		{
+			tabBarLabel:() => {
+				const { routeName } = navigation.state;
+				let title='';
+				if (routeName === 'Home') {
+					title = 'HOME';
+				} else if (routeName === 'Browse') {
+					title = 'BROWSE';
+				}else if (routeName === 'Library') {
+					title = 'BROWSE';
+				}else if (routeName === 'Bonus') {
+					title = 'BONUS';
+				}else if (routeName === 'Settings') {
+					title = 'SETTINGS';
+				}
+				return <Text>{title}</Text>;
+			},
+			tabBarIcon:() => {
+				const { routeName } = navigation.state;
+				switch(routeName)
+				{
+					case 'Home': {
+						return <MaterialCommunityIcons name='home-outline' size={25}/>
+					} 
+					case 'Browse': {
+						return <Entypo name='magnifying-glass' size={25}/>
+					}
+					case 'Library': {
+						return <Feather name='headphones' size={25}/>
+					}
+					case 'Bonus': {
+						return <FontAwesome name='gift' size={25}/>
+					}
+					case 'Settings': {
+						return <Ionicons name='md-settings' size={25}/>
+					}
+				}
+			},
+		}),
 	}
-});
-
+);
 const localStyles=StyleSheet.create({
 	screenContainer:{
-		flex:.8,
-		justifyContent:'center',
-		alignItems:'center',
 	},
-	bottomNavigatorContainer:{
-		position:'absolute',
-		bottom: 0,
-		flex:.2,
-		width:400,
-		flexDirection:'row',
-		alignSelf:'stretch',
-		marginBottom:10,
-		backgroundColor:'white',
+	sliderContainer:{
 	},
-	contentContainer: {
-		borderWidth: 2,
-		borderColor: '#CCC',
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-	  },
+	sliderHeader:{
+		fontSize:20,
+		fontWeight:'bold',
+		padding:10,
+	},
+	CarouselContainer:{
+		margin:10,
+	},
 });
