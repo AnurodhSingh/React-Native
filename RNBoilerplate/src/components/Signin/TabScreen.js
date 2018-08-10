@@ -27,6 +27,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Carousel from 'react-native-snap-carousel';
+import SettingsScreen from './DrawerScreen';
 
 const Home=<MaterialCommunityIcons name='home-outline' size={25}/>
 const Browse=<Entypo name='magnifying-glass' size={25}/>
@@ -125,15 +126,40 @@ class HomeScreen extends Component{
 class BrowseScreen extends Component{
 	constructor(props) {
 		super(props);
+		this.state={
+			entry:['https://placeimg.com/200/200/animals','https://loremflickr.com/320/240','https://loremflickr.com/320/240/dog','https://loremflickr.com/320/240/brazil,rio'],
+		}
 	};
-	
+	_renderItem(item,index)
+	{
+		return(
+			<View>
+			  <Image 
+				  style={{height:150,width:150}}
+				  source={{uri:item}}
+			  />
+		  	</View>
+	  	)
+	}
 	render(){
 		return(
-		<View style={localStyles.screenContainer}>
-			<Text>
-				Browse
-			</Text>
-		</View>
+			<ScrollView style={localStyles.screenContainer}>
+				<View style={localStyles.sliderContainer}>
+					<Text style={localStyles.sliderHeader}>
+						Continue Listening
+					</Text>
+					<View style={localStyles.CarouselContainer}>
+						<Carousel
+							firstItem={1}
+							data={this.state.entry}
+							renderItem={({item,index})=>this._renderItem(item,index)}
+							sliderWidth={400}
+							itemWidth={150}
+							layout={'default'}
+						/>
+					</View>
+				</View>
+			</ScrollView>
 		);
 	}
 }
@@ -160,20 +186,6 @@ class BonusScreen extends Component{
 		<View style={localStyles.screenContainer}>
 			<Text>
 				Bonus
-			</Text>
-		</View>
-		);
-	}
-}
-class SettingsScreen extends Component{
-	constructor(props) {
-		super(props);
-	};
-	render(){
-		return(
-		<View style={localStyles.screenContainer}>
-			<Text>
-				Settings
 			</Text>
 		</View>
 		);
