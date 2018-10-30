@@ -77,17 +77,18 @@ export default class SigninComponent extends Component {
 
 	loginWithGoogle()
 	{
-		// GoogleSignin.hasPlayServices({ autoResolve: true }).then(() => {
-		// 	alert('available');
-		// })
-		// .catch((err) => {
-		//   console.log("Play services error", err.code, err.message);
-		// })
+		GoogleSignin.hasPlayServices({ autoResolve: true }).then(() => {
+			alert('available');
+		})
+		.catch((err) => {
+		  console.log("Play services error", err.code, err.message);
+		})
 
 		GoogleSignin.configure({
 			iosClientId:'707982056829-ite21ih67cld03ke5ankofjr2eo79no2.apps.googleusercontent.com'
 		  }).then(() => {
 			GoogleSignin.signIn().then((user)=>{
+				console.log("$$$$$$$",user);
 				alert('Login Successfull');
 				this.setState({ user });
 				this.props.navigation.navigate('HomeScreen');

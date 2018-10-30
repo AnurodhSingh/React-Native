@@ -1,0 +1,28 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'FirebaseApp' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for FirebaseApp
+
+  target 'FirebaseAppTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
+
+target 'FirebaseApp-tvOS' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for FirebaseApp-tvOS
+
+  target 'FirebaseApp-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
