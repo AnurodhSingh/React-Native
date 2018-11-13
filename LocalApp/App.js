@@ -2,17 +2,16 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import Approot from './src/Approot';
 import HomeContainer from './src/Home/HomeContainer';
+import AnimationContainer from './src/Animation/AnimationContainer';
+import MapContainer from './src/Map/MapContainer';
 
 type Props = {};
+
 export default class App extends Component<Props> {
-  
-  componentDidMount(){
-    
-  }
   render() {
     return (
       <View style={styles.container}>
-        <HomeContainer/>
+        <Approot/>
       </View>
     );
   }
@@ -21,8 +20,6 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   welcome: {
     fontSize: 20,

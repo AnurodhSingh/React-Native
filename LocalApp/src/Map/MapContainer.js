@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import HomeComponent from './HomeComponent';
-export default class HomeContainer extends Component {
+import MapComponent from './MapComponent';
+export default class MapContainer extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
@@ -8,7 +8,7 @@ export default class HomeContainer extends Component {
   }
   render() {
     return (
-      <HomeComponent {...this.props}/>
+      <MapComponent {...this.props}/>
     );
   }
 }
