@@ -12,7 +12,7 @@ module.exports = StyleSheet.create({
 	},
 	logoContainer: {
 		alignItems: 'center',
-		paddingTop: verticalScale(100),
+		paddingTop: verticalScale(60),
 	},
 	logoStyle: {
 		height: scale(60),
@@ -46,7 +46,7 @@ module.exports = StyleSheet.create({
 		color:'white'
 	},
 	buttonStyle: {
-		marginTop: scale(50),
+		marginTop: scale(30),
 		marginHorizontal: scale(60),
 		borderWidth: 1,
 		borderRadius: scale(25),
@@ -54,8 +54,6 @@ module.exports = StyleSheet.create({
 		alignItems: 'center',
 		height: verticalScale(50),
 		borderColor: CONST.INPUT_TEXT_BORDER_COLOR,
-		padding: verticalScale(10),
-		paddingRight: verticalScale(30),
 		backgroundColor:CONST.SUBMIT_BUTTON_BG_COLOR,
 	},
 	buttonTextStyle: {

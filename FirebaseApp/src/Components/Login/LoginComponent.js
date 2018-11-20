@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { Text, View, SafeAreaView, TouchableOpacity,Image,TextInput} from 'react-native';
 import style from './style';
 import * as CONST from './../../../utils/Const';
+import * as firebase from 'firebase';
+import resetRoute from './../../../utils/resetRoute'
 
 export default class LoginComponent extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
-      email:'',
-      password:'',
+      email:'anurodh123@gmail.com',
+      password:'abc123!@#',
     };
   }
   componentDidMount() {
@@ -20,15 +22,39 @@ export default class LoginComponent extends Component {
   }
 
   login() {
-    
+    this.props.CommonAction.startSpinner();
+    let{
+      email,
+      password}=this.state;
+    firebase.auth().signInWithEmailAndPassword(email, password).then((response)=>{
+      console.log('hello1',JSON.stringify(response));
+      let {uid} = response.user;
+      resetRoute('HomeScreen',this.props.navigation);
+      this.props.UserDetailAction.saveUserDetail({
+        email,
+        password,
+        uid
+      });
+      this.props.CommonAction.stopSpinner();
+    }).catch((response)=> {
+      console.log('hello2',response)
+      this.props.CommonAction.stopSpinner();
+    });
   }
-
+  navigateToSignUp() {
+    this.props.navigation.navigate('SignUpScreen');
+  }
   render() {
-    console.log(this.state.data);
-    let {data} = this.state;
     return (
       <SafeAreaView style={style.safeAreaViewStyle}>
         <View style={style.mainContainerStyle}>
+          <View style={style.headerStyle}>
+            <TouchableOpacity style={style.backIconContainer}
+              onPress={()=>{this.navigateToSignUp()}}
+            >
+              <Image style={style.backIconStyle} source={CONST.BACK_ICON}/>
+            </TouchableOpacity>
+          </View>
           <View style={style.logoContainer}>
             <Image style={style.logoStyle} source={CONST.LOGO}/>
             <Text style={style.logoTextStyle}>CHAT APP</Text>

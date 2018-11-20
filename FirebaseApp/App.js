@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import configureStore from './src/configureStore';
 import {Platform, StyleSheet, Text, View,TouchableOpacity} from 'react-native';
 import * as firebase from 'firebase';
+import Spinner from './src/Components/Spinner/index'
 import Approot from './src/Approot'
 
 type Props = {};
@@ -11,7 +12,6 @@ export default class App extends Component<Props> {
     super(props);
     this.state = {
       store: configureStore(() => {
-        console.log('Store persisted !');
       }).store
     }
   }
@@ -22,12 +22,10 @@ export default class App extends Component<Props> {
       databaseURL: "https://fir-app-371e2.firebaseio.com",
       storageBucket: "fir-app-371e2.appspot.com",
     };
-    console.log(firebase.apps);
     if(!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
   }
-
   update(fname='Anurodh',lname='Singh'){
     console.log("hello",firebase.database().ref());
     firebase.database().ref('Data').set({
@@ -52,7 +50,10 @@ export default class App extends Component<Props> {
     return (
       <View style={styles.container}>
         <Provider store={this.state.store}>
-          <Approot/>
+          <View style={styles.container}>
+            <Approot/>
+            <Spinner/>
+          </View>
         </Provider>
       </View>
     );

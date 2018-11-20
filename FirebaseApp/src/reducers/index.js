@@ -1,12 +1,8 @@
-/**
- * @author Systango Technologies 
- * Date:
- * Description: INDEX REDUCER !
- * 
- */
 import { combineReducers } from 'redux';
-import downloadEpisodeReducer from './downloadEpisodeReducer';
+import CommonReducer from './CommonReducer';
+import UserDetailReducer from './UserDetailReducer';
 
 export default combineReducers({
-	downloadEpisodeReducer,
+	CommonReducer,
+	UserDetailReducer
 });

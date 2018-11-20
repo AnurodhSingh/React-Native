@@ -1,11 +1,13 @@
 import React from 'react';
-import SignInContainer from './Components/SignIn/SignInContainer';
+import SignUpContainer from './Components/SignUp/SignUpContainer';
 import LoginContainer from './Components/Login/LoginContainer';
 import HomeContainer from './Components/Home/HomeContainer';
+import ChatScreenContainer from './Components/ChatScreen/ChatScreenContainer';
 import { createStackNavigator} from 'react-navigation';
 
 export default createStackNavigator({
-	SignIncreen: { screen: SignInContainer, navigationOptions: { header: null } },
+	SignUpScreen: { screen: SignUpContainer, navigationOptions: { header: null } },
 	LoginScreen: { screen: LoginContainer, navigationOptions: { header: null } },
 	HomeScreen: { screen: HomeContainer, navigationOptions: { header: null } },
+	ChatScreen: { screen: ChatScreenContainer, navigationOptions: { header: null } },
 });	

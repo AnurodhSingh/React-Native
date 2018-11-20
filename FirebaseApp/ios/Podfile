@@ -8,6 +8,16 @@ target 'FirebaseApp' do
   # Pods for FirebaseApp
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
+  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+
+  pod 'react-native-fetch-blob', :path => '../node_modules/react-native-fetch-blob'
+
+  pod 'react-native-orientation', :path => '../node_modules/react-native-orientation'
+
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  pod 'react-native-spinkit', :path => '../node_modules/react-native-spinkit'
+
   target 'FirebaseAppTests' do
     inherit! :search_paths
     # Pods for testing

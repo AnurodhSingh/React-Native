@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Text, View, SafeAreaView, TouchableOpacity,Image,TextInput,Keyboard} from 'react-native';
 import style from './style';
-import * as CONST from './../../../utils/Const';
-import Validators from './../../../utils/Validator';
-import showToast from './../../../utils/Toast/index';
+import * as CONST from '../../../utils/Const';
+import Validators from '../../../utils/Validator';
+import showToast from '../../../utils/Toast/index';
+import * as firebase from 'firebase';
 
-export default class SignInComponent extends Component {
+export default class SignUpComponent extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
@@ -18,12 +19,53 @@ export default class SignInComponent extends Component {
   componentDidMount() {
     
   }
-
-  componentWillUnmount() {
-    
+  createNewUser(uid) {
+    const { firstName, lastName, email, password } = this.state;
+    firebase.database().ref('Data/Users/'+uid).set({
+      firstName,
+      lastName,
+      email,
+      password
+    }).then((data)=>{
+        //success callback
+        console.log('data ' , data)
+        this.props.UserDetailAction.saveUserDetail({
+          firstName,
+          lastName,
+          email,
+          password,
+          uid
+        });
+    }).catch((error)=>{
+        //error callback
+        console.log('error ' , error)
+    })
+    this.props.CommonAction.stopSpinner();
+    this.setState({
+      firstName:'',
+      lastName:'',
+      email:'',
+      password:'',
+    })
   }
+  authenticateUser() {
+    let{
+      email,
+      password
+    } = this.state;
 
+    firebase.auth().createUserWithEmailAndPassword(email, password).then((response)=>{
+      showToast('Account created successfully');
+      this.props.navigation.navigate('LoginScreen');
+      this.createNewUser(response.user.uid);
+    }).catch((error)=>{
+      showToast('Email id already in use');
+      console.log('error',error)
+      this.props.CommonAction.stopSpinner();
+    });
+  }
   signIn() {
+    this.props.CommonAction.startSpinner();
     const { firstName, lastName, email, password } = this.state;
     if (Validators.isEmpty(firstName)) {
 			showToast(CONST.NAME_VALIDATION);
@@ -41,14 +83,13 @@ export default class SignInComponent extends Component {
 			showToast(CONST.PASSWORD_VALIDATION);
 		} else {	
 			Keyboard.dismiss;
-			this.props.CommonAction.startSpin();
-			this.props.userLogin(email, password, firstName, lastName);
+      this.authenticateUser();
 		}
   }
-
+  navigateToLogin() {
+    this.props.navigation.navigate('LoginScreen');
+  }
   render() {
-    console.log(this.state.data);
-    let {data} = this.state;
     return (
       <SafeAreaView style={style.safeAreaViewStyle}>
         <View style={style.mainContainerStyle}>
@@ -112,6 +153,14 @@ export default class SignInComponent extends Component {
             >
               <Text style={style.buttonTextStyle}>
                 {'Get Started'}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={style.buttonStyle}
+              onPress={()=>{this.navigateToLogin()}}
+            >
+              <Text style={style.buttonTextStyle}>
+                {'Already a Member'}
               </Text>
             </TouchableOpacity>
           </View>

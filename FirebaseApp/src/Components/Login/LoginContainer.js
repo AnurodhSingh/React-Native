@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import LoginComponent from './LoginComponent';
-export default class LoginContainer extends Component {
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as CommonAction from '../../actions/commonAction';
+import * as UserDetailAction from '../../actions/userDetailAction';
+class LoginContainer extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
     };
+  }
+  componentDidMount() {
+
   }
   render() {
     return (
@@ -12,3 +19,18 @@ export default class LoginContainer extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+	const { } = state;
+	return {
+	};
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+    CommonAction: bindActionCreators(CommonAction,dispatch),
+    UserDetailAction: bindActionCreators(UserDetailAction,dispatch),
+  }
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

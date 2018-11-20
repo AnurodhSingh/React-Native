@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import SignInComponent from './SignInComponent';
-import * as CommonAction from './../../actions/commonAction';
+import SignInComponent from './SignUpComponent';
+import * as CommonAction from '../../actions/commonAction';
+import * as UserDetailAction from '../../actions/userDetailAction';
 
-class SignInContainer extends Component {
+class SignUpContainer extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
@@ -26,8 +27,9 @@ function mapStateToProps(state) {
 const mapDispatchToProps = (dispatch) => {
 	return {
     CommonAction: bindActionCreators(CommonAction,dispatch),
+    UserDetailAction: bindActionCreators(UserDetailAction,dispatch),
   }
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignInContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpContainer);

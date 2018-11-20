@@ -8,7 +8,17 @@ module.exports = StyleSheet.create({
 	},
 	mainContainerStyle: {
 		flex: 1,
+		justifyContent:'center',
+		alignItems:'center',
 		backgroundColor: CONST.LOGIN_BG_COLOR
+	},
+	headerStyle: {
+		height: verticalScale(40),
+		alignSelf: 'stretch',
+		justifyContent: 'center',
+	},
+	backIconStyle: {
+		marginLeft: scale(10)
 	},
 	logoContainer: {
 		alignItems: 'center',
@@ -54,8 +64,6 @@ module.exports = StyleSheet.create({
 		alignItems: 'center',
 		height: verticalScale(50),
 		borderColor: CONST.INPUT_TEXT_BORDER_COLOR,
-		padding: verticalScale(10),
-		paddingRight: verticalScale(30),
 		backgroundColor:CONST.SUBMIT_BUTTON_BG_COLOR,
 	},
 	buttonTextStyle: {
