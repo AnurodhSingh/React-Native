@@ -9,6 +9,7 @@ class ChatScreenContainer extends Component {
     };
   }
   render() {
+    console.log('$$$$$$',this.props.userDetail);
     return (
       <ChatScreenComponent {...this.props}/>
     );

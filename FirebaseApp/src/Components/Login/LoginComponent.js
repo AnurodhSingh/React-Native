@@ -3,7 +3,7 @@ import { Text, View, SafeAreaView, TouchableOpacity,Image,TextInput} from 'react
 import style from './style';
 import * as CONST from './../../../utils/Const';
 import * as firebase from 'firebase';
-import resetRoute from './../../../utils/resetRoute'
+import resetRoute from './../../../utils/resetRoute';
 
 export default class LoginComponent extends Component {
   constructor(props) {
@@ -17,8 +17,8 @@ export default class LoginComponent extends Component {
     
   }
 
-  componentWillUnmount() {
-    
+  componentWillMount(){
+   // resetRoute('SignUpScreen',this.props.navigation);
   }
 
   login() {
@@ -28,12 +28,16 @@ export default class LoginComponent extends Component {
       password}=this.state;
     firebase.auth().signInWithEmailAndPassword(email, password).then((response)=>{
       console.log('hello1',JSON.stringify(response));
-      let {uid} = response.user;
+      let {uid ,displayName} = response.user;
+      let firstName=displayName.split(' ')[0];
+      let lastName=displayName.split(' ')[1];
       resetRoute('HomeScreen',this.props.navigation);
       this.props.UserDetailAction.saveUserDetail({
         email,
         password,
-        uid
+        uid,
+        firstName,
+        lastName
       });
       this.props.CommonAction.stopSpinner();
     }).catch((response)=> {

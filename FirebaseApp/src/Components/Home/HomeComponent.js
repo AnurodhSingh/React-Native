@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Text, View, SafeAreaView, TouchableOpacity, Dimensions} from 'react-native';
 import {createMaterialTopTabNavigator} from 'react-navigation';
-import AllChatsContainer from './../AllChats/AllChatsContainer';
+import AllUsersContainer from './../AllUsers/AllUsersContainer';
 import MyChatsContainer from './../MyChats/MyChatsContainer';
 import CommonHeader from './../CommonHeader/CommonHeader';
 import * as CONST from './../../../utils/Const';
 
 const HomeTab = createMaterialTopTabNavigator({
-  AllChats : AllChatsContainer,
+  AllUsers : AllUsersContainer,
   MyChats : MyChatsContainer,
 }, {
   tabBarOptions: {

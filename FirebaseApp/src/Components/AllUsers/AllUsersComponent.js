@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import {Image, Text, View, SafeAreaView, TouchableOpacity, Dimensions, FlatList,ActivityIndicator} from 'react-native';
 import * as firebase from 'firebase';
 import style from './style';
-import * as CONST from './../../../utils/Const';
+import * as CONST from '../../../utils/Const';
 
-export default class AllChatsComponent extends Component {
+export default class AllUsersComponent extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
       users:[],
+      isfetching:true,
     };
   }
   componentDidMount() {
@@ -18,21 +19,20 @@ export default class AllChatsComponent extends Component {
       for (key in temp){
         users.push({...temp[key],uid:key})
       }
-      this.setState({users});
+      this.setState({users,isfetching:false});
     }).catch((error)=>{
       console.log('yoyo',error);
     });
   }
-  chatScreen(uid){
-    this.props.screenProps.rootNavigation.navigate('ChatScreen',{uid})
+  chatScreen(item){
+    this.props.screenProps.rootNavigation.navigate('ChatScreen',{item})
   }
   _renderItems(item) {
     let {uid} = this.props.userDetail;
-    console.log(uid+'     '+item.uid,uid!=item.uid);
     if(uid!=item.uid){
       return(
         <TouchableOpacity style={style.rowStyle}
-          onPress={()=>{this.chatScreen(item.uid)}}
+          onPress={()=>{this.chatScreen(item)}}
         >
           <View style={{flexDirection:'row',alignSelf:'stretch',justifyContent:'space-between',alignItems:'center'}}>
             <View style={style.imageContainer}>
@@ -50,16 +50,19 @@ export default class AllChatsComponent extends Component {
     }
   }
   render() {
+    let {isfetching}=this.state;
     return (
         <View style={style.safeAreaView}>
-          {(this.state.users.length!=0)?
+          {isfetching?
+          <View style={{flex:1,justifyContent:'center'}}>
+            <ActivityIndicator size="large" color={CONST.LOGIN_BG_COLOR} />
+          </View>
+          :
           <FlatList
             data={this.state.users}
             keyExtractor={(item,index)=>''+index}
             renderItem={({item})=>this._renderItems(item)}
-          />
-          :
-          <ActivityIndicator/>}
+          />}
         </View>
     );
   }

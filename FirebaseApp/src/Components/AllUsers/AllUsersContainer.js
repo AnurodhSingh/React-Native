@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import AllChatsComponent from './AllChatsComponent';
-class AllChatsContainer extends Component {
+import AllUsersComponent from './AllUsersComponent';
+class AllUsersContainer extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
@@ -10,7 +10,7 @@ class AllChatsContainer extends Component {
   }
   render() {
     return (
-      <AllChatsComponent {...this.props}/>
+      <AllUsersComponent {...this.props}/>
     );
   }
 }
@@ -27,4 +27,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllChatsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AllUsersContainer);

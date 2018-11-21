@@ -4,6 +4,7 @@ import style from './style';
 import * as CONST from '../../../utils/Const';
 import Validators from '../../../utils/Validator';
 import showToast from '../../../utils/Toast/index';
+import resetRoute from './../../../utils/resetRoute';
 import * as firebase from 'firebase';
 
 export default class SignUpComponent extends Component {
@@ -15,6 +16,9 @@ export default class SignUpComponent extends Component {
       email:'anurodh123@gmail.com',
       password:'abc123!@#',
     };
+  }
+  componentWillMount(){
+    //resetRoute('LoginScreen',this.props.navigation);
   }
   componentDidMount() {
     
@@ -51,13 +55,20 @@ export default class SignUpComponent extends Component {
   authenticateUser() {
     let{
       email,
-      password
+      password,
+      firstName,
+      lastName
     } = this.state;
 
     firebase.auth().createUserWithEmailAndPassword(email, password).then((response)=>{
       showToast('Account created successfully');
       this.props.navigation.navigate('LoginScreen');
       this.createNewUser(response.user.uid);
+
+      response.user.updateProfile({
+          displayName: firstName+' '+lastName
+      });
+      
     }).catch((error)=>{
       showToast('Email id already in use');
       console.log('error',error)
