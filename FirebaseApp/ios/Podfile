@@ -18,6 +18,8 @@ target 'FirebaseApp' do
 
   pod 'react-native-spinkit', :path => '../node_modules/react-native-spinkit'
 
+  pod 'react-native-fcm', :path => '../node_modules/react-native-fcm'
+
   target 'FirebaseAppTests' do
     inherit! :search_paths
     # Pods for testing

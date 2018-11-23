@@ -102,7 +102,7 @@ export default class AnimationComponent extends Component<Props> {
     const changedDistance = event.nativeEvent.contentOffset.y;
     const { currentDistance } = this.state;
     const difference = changedDistance-currentDistance;
-    if(Math.abs(difference)>20) {
+    if(Math.abs(difference)>10) {
       if(difference>0 && this.state.difference!='positive') {
         this.setState({showIcon:true,difference:'positive'});
         this.animate();
@@ -126,8 +126,8 @@ export default class AnimationComponent extends Component<Props> {
           >
             {this.show(data)}
           </ScrollView>
-          {this.showIconFromBottom()}
-          {/* {this.showIconFromNoWhere()} */}
+          {/* {this.showIconFromBottom()} */}
+          {this.showIconFromNoWhere()}
         </View>
       </SafeAreaView>
     );

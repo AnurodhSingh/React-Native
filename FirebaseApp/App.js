@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import { Provider } from 'react-redux'
 import configureStore from './src/configureStore';
 import {Platform, StyleSheet, Text, View,TouchableOpacity} from 'react-native';
-import * as firebase from 'firebase';
+import firebase from '@firebase/app';
+import '@firebase/auth';
 import Spinner from './src/Components/Spinner/index'
 import Approot from './src/Approot'
-
 type Props = {};
 export default class App extends Component<Props> {
   constructor(props) {
@@ -16,12 +16,23 @@ export default class App extends Component<Props> {
     }
   }
   componentDidMount(){
-    const firebaseConfig = {
-      apiKey: "AIzaSyAUbQNvB31cy_qYR4zv5Znmsrh4rtzNIhU",
-      authDomain: "fir-app-371e2.firebaseapp.com",
-      databaseURL: "https://fir-app-371e2.firebaseio.com",
-      storageBucket: "fir-app-371e2.appspot.com",
-    };
+    let firebaseConfig = null;
+    // if(Platform.OS=='ios') {
+    //   firebaseConfig = {
+    //     apiKey: "AIzaSyAUbQNvB31cy_qYR4zv5Znmsrh4rtzNIhU",
+    //     authDomain: "fir-app-371e2.firebaseapp.com",
+    //     databaseURL: "https://fir-app-371e2.firebaseio.com",
+    //     storageBucket: "fir-app-371e2.appspot.com",
+    //   };
+    // }
+    // else {
+      firebaseConfig = {
+        apiKey: "AIzaSyCeH_v47v6a8-XPkwOr8wp_Rxw1EmP4cJc",
+        authDomain: "fir-app-371e2.firebaseapp.com",
+        databaseURL: "https://fir-app-371e2.firebaseio.com",
+        storageBucket: "fir-app-371e2.appspot.com",
+      };
+    // }
     if(!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
