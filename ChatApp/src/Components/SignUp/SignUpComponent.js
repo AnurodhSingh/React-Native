@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
-import { Text, View, SafeAreaView, TouchableOpacity,Image,TextInput,Keyboard} from 'react-native';
+import { Text, View, SafeAreaView, TouchableOpacity,Image,TextInput,Keyboard,AsyncStorage} from 'react-native';
 import style from './style';
 import * as CONST from '../../../utils/Const';
 import Validators from '../../../utils/Validator';
 import showToast from '../../../utils/Toast/index';
 import resetRoute from './../../../utils/resetRoute';
 import * as firebase from 'react-native-firebase';
-
+let fcmToken=null;
 export default class SignUpComponent extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
-      firstName:'Anurodh',
-      lastName:'Singh',
-      email:'anurodh123@gmail.com',
+      firstName:'Himanshu',
+      lastName:'Vishvakarma',
+      email:'himanshu@gmail.com',
       password:'abc123!@#',
     };
   }
@@ -21,15 +21,20 @@ export default class SignUpComponent extends Component {
     //resetRoute('LoginScreen',this.props.navigation);
   }
   componentDidMount() {
-    
+    this.getFCMToken()
+  }
+  async getFCMToken() {
+    fcmToken = await AsyncStorage.getItem('fcmToken');
   }
   createNewUser(uid) {
+    alert(fcmToken);
     const { firstName, lastName, email, password } = this.state;
     firebase.database().ref('Data/Users/'+uid).set({
       firstName,
       lastName,
       email,
-      password
+      password,
+      fcmToken
     }).then((data)=>{
         //success callback
         console.log('data ' , data)
@@ -38,7 +43,8 @@ export default class SignUpComponent extends Component {
           lastName,
           email,
           password,
-          uid
+          uid,
+          fcmToken,
         });
     }).catch((error)=>{
         //error callback

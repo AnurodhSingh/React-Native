@@ -5,11 +5,11 @@ import style from './style';
 import * as CONST from './../../../utils/Const';
 import { GiftedChat } from 'react-native-gifted-chat'
 import ChatHeaderComponent from './../ChatHeader/ChatHeader'
-
+let recieverFcmToken=null;
 export default class ChatScreenComponent extends Component {
     constructor(props) {
         messagesRef = null,
-            super(props);
+        super(props);
         this.state = {
             senderUid: this.props.userDetail.uid,
             recieverUid: this.props.navigation.state.params.item.uid,
@@ -20,15 +20,17 @@ export default class ChatScreenComponent extends Component {
         };
     }
     componentWillMount() {
-
+        recieverFcmToken
+    }
+    getRecieverFcmToken() {
+        let { recieverUid } = this.state;
+        firebase.database().ref('Data/Users/' + recieverUid).once('value', (snapshot) => {
+            let userObject = snapshot.val()
+            recieverFcmToken = userObject.fcmToken;
+        });
     }
     componentDidMount() {
-        // alert(this.props.navigation.state.params.uid);
-        // alert(this.props.userDetail.uid);
-
-        // let senderUid=this.props.userDetail.uid;
-        // let recieverUid=this.props.navigation.state.params.uid;
-
+        this.getRecieverFcmToken();
         let { senderUid, recieverUid } = this.state;
         let chatNode = '';
         if (senderUid > recieverUid) {
@@ -41,19 +43,19 @@ export default class ChatScreenComponent extends Component {
         this.loadMessage(chatNode);
 
         this.messagesRef = firebase.database().ref('Data/Chat/' + chatNode);
-        this.messagesRef.limitToLast(1).on('child_added', () => { this.loadMessage(chatNode) });
+        this.messagesRef.limitToLast(10).on('child_added', () => { this.loadMessage(chatNode) });
     }
     loadMessage(chatNode) {
-        firebase.database().ref('Data/Chat/' + chatNode).once('value', (snapshot) => {
+        firebase.database().ref('Data/Chat/' + chatNode).orderByKey().once('value', (snapshot) => {
             let messageObject = snapshot.val();
             if (messageObject) {
                 let messageArray = [];
                 this.setState({ firstMessage: false });
-                for (let obj in messageObject) {
-                    // console.log('$$$$',new Date(messageObject[obj]));
-                    // messageObject[obj] = Date.parse(messageObject[obj]);
-                    messageArray = [messageObject[obj], ...messageArray];
-                }
+                snapshot.forEach(function(childSnapshot) {
+                    var key = childSnapshot.key;
+                    messageArray = [messageObject[key], ...messageArray];
+
+                });
                 this.setState({ messageArray });
             }
             this.setState({ fetching: false});
@@ -61,12 +63,16 @@ export default class ChatScreenComponent extends Component {
     }
 
     onSend(messages = []) {
-          let createdAt = '' + messages[0].createdAt;
+        let createdAt = '' + messages[0].createdAt;
         this.setState(previousState => ({
             messageArray: GiftedChat.append(previousState.messageArray, messages),
         }))
 
         let { firstMessage, chatNode, senderUid, recieverUid } = this.state;
+        let senderFirstName=this.props.userDetail.firstName;
+        let senderLastName=this.props.userDetail.lastName;
+        let recieverFirstName= this.props.navigation.state.params.item.firstName;
+        let recieverLastName= this.props.navigation.state.params.item.lastName;
 
         firebase.database().ref('Data/Chat/' + chatNode + '/' + new Date().getTime()).set({
             _id: messages[0]._id,
@@ -74,19 +80,16 @@ export default class ChatScreenComponent extends Component {
             createdAt: createdAt,
             user: {
                 _id: recieverUid,
-                name: 'React Native',
+                name: recieverFirstName +' '+recieverLastName,
             },
         }).then((data) => {
             //success callback
+            this.sendPushNotification();
             console.log('data ', data)
         }).catch((error) => {
             //error callback
             console.log('error ', error)
-        })
-        let senderFirstName=this.props.userDetail.firstName;
-        let senderLastName=this.props.userDetail.lastName;
-        let recieverFirstName= this.props.navigation.state.params.item.firstName;
-        let recieverLastName= this.props.navigation.state.params.item.lastName;
+        });
         if (firstMessage) {
             firebase.database().ref('Data/ChatedUser/' + senderUid + '/' + recieverUid).set({
                 chatRef: chatNode,
@@ -145,6 +148,9 @@ export default class ChatScreenComponent extends Component {
                 console.log('error ', error)
             }); 
         }
+    }
+    sendPushNotification(){
+        // do something for push notification.
     }
 
     render() {

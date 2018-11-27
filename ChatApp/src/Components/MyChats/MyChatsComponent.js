@@ -20,7 +20,8 @@ export default class MyChatsComponent extends Component {
     let {uid} = this.props.userDetail;
     this.messagesRef = firebase.database().ref('Data/ChatedUser/'+uid);
     this.loadMychats();
-    this.messagesRef.limitToLast(10).on('child_added', () => { this.loadMychats()});
+    this.messagesRef.limitToLast(1).on('child_changed', () => { this.loadMychats()});
+    this.messagesRef.limitToLast(1).on('child_added', () => { this.loadMychats()});
   }
   loadMychats() {
     let {uid} = this.props.userDetail;
@@ -34,12 +35,12 @@ export default class MyChatsComponent extends Component {
     }).catch((error)=>{
       console.log('error',error);
     });
+    this.setState({toggle:!this.state.toggle});
   }
   chatScreen(item){
     this.props.screenProps.rootNavigation.navigate('ChatScreen',{item})
   }
   _renderItems(item) {
-    console.log();
     return(
       <TouchableOpacity style={style.rowStyle}
         onPress={()=>{this.chatScreen(item)}}
@@ -71,7 +72,7 @@ export default class MyChatsComponent extends Component {
     )
   }
   render() {
-    let {isfetching,users}=this.state;
+    let {isfetching,users,toggle}=this.state;
     return (
       <View style={style.safeAreaView}>
           {isfetching?

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View, SafeAreaView, TouchableOpacity,Image,TextInput} from 'react-native';
+import { Text, View, SafeAreaView, TouchableOpacity,Image,TextInput,AsyncStorage} from 'react-native';
 import style from './style';
 import * as CONST from './../../../utils/Const';
 import * as firebase from 'react-native-firebase';
 import resetRoute from './../../../utils/resetRoute';
-
+let fcmToken=null;
 export default class LoginComponent extends Component {
   constructor(props) {
 		super(props);
@@ -14,13 +14,15 @@ export default class LoginComponent extends Component {
     };
   }
   componentDidMount() {
-    
+    this.getFCMToken();
   }
 
   componentWillMount(){
    // resetRoute('SignUpScreen',this.props.navigation);
   }
-
+  async getFCMToken() {
+    fcmToken = await AsyncStorage.getItem('fcmToken');
+  }
   login() {
     this.props.CommonAction.startSpinner();
     let{
@@ -37,7 +39,8 @@ export default class LoginComponent extends Component {
         password,
         uid,
         firstName,
-        lastName
+        lastName,
+        fcmToken
       });
       this.props.CommonAction.stopSpinner();
     }).catch((response)=> {
