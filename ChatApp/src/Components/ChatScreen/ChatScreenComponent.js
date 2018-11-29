@@ -20,7 +20,6 @@ export default class ChatScreenComponent extends Component {
         };
     }
     componentWillMount() {
-        recieverFcmToken
     }
     getRecieverFcmToken() {
         let { recieverUid } = this.state;
@@ -84,7 +83,7 @@ export default class ChatScreenComponent extends Component {
             },
         }).then((data) => {
             //success callback
-            this.sendPushNotification();
+            this.sendPushNotification(messages[0].text);
             console.log('data ', data)
         }).catch((error) => {
             //error callback
@@ -149,8 +148,27 @@ export default class ChatScreenComponent extends Component {
             }); 
         }
     }
-    sendPushNotification(){
-        // do something for push notification.
+    sendPushNotification(text){
+        let senderFirstName = this.props.userDetail.firstName;
+        let senderLastName = this.props.userDetail.lastName;
+        let recieverFirstName = this.props.navigation.state.params.item.firstName;
+        let recieverLastName = this.props.navigation.state.params.item.lastName;
+
+        let payload = {
+            "message" : text,
+            "token" : recieverFcmToken,
+            "sender" : senderFirstName + senderLastName,
+            "reciever" : recieverFirstName + recieverLastName
+        }
+        firebase.database().ref('Data/Notification/').set({
+            ...payload
+        }).then((data) => {
+            console.log('data ', data)
+        }).catch((error) => {
+            //error callback
+            console.log('error ', error)
+        })
+        // this.props.pushNotificationAction.sendNotification(payload)
     }
 
     render() {
@@ -171,7 +189,7 @@ export default class ChatScreenComponent extends Component {
                                 _id: recieverUid,
                             }}
                         />
-                        }
+                    }
                 </View>
             </SafeAreaView>
         );

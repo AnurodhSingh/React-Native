@@ -24,5 +24,9 @@ export const NAME_VALIDATION = 'Please enter a valid name';
 
 export const START_SPINNER = 'START_SPINNER';
 export const STOP_SPINNER = 'STOP_SPINNER';
-export const internetStatus = 'internetStatus';
+export const INTERNET_STATUS = 'INTERNET_STATUS';
 export const USER_DETAIL = 'USER_DETAIL';
+
+// Saga constants
+
+export const POST_NOTIFICATION = 'POST_NOTIFICATION';
