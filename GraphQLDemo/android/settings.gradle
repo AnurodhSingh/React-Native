@@ -1,0 +1,3 @@
+rootProject.name = 'GraphQLDemo'
+
+include ':app'
