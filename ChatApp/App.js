@@ -3,8 +3,9 @@ import { Provider } from 'react-redux'
 import configureStore from './src/configureStore';
 import {Platform, StyleSheet, Text, View, TouchableOpacity, AsyncStorage,Alert} from 'react-native';
 import firebase from 'react-native-firebase';
-// import Spinner from './src/Components/Spinner/index'
-import Approot from './src/Approot'
+import Spinner from './src/Components/Spinner/index';
+import Approot from './src/Approot';
+import Orientation from 'react-native-orientation';
 type Props = {};
 export default class App extends Component<Props> {
   constructor(props) {
@@ -16,6 +17,7 @@ export default class App extends Component<Props> {
   }
 
   async componentDidMount() {
+		Orientation.lockToPortrait();
     this.checkPermission();
     this.createNotificationListeners();
   }
@@ -31,7 +33,6 @@ export default class App extends Component<Props> {
   
   async getToken() {
     let fcmToken = await AsyncStorage.getItem('fcmToken');
-    alert(fcmToken);
     if (!fcmToken) {
         fcmToken = await firebase.messaging().getToken();
         if (fcmToken) {
@@ -198,7 +199,7 @@ export default class App extends Component<Props> {
         <Provider store={this.state.store}>
           <View style={styles.container}>
             <Approot/>
-            {/* <Spinner/> */}
+            <Spinner/>
           </View>
         </Provider>
       </View>

@@ -11,10 +11,10 @@ export default class SignUpComponent extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
-      firstName:'Himanshu',
-      lastName:'Vishvakarma',
-      email:'himanshu@gmail.com',
-      password:'abc123!@#',
+      firstName:'',
+      lastName:'',
+      email:'',
+      password:'',
     };
   }
   componentWillMount(){
@@ -27,7 +27,6 @@ export default class SignUpComponent extends Component {
     fcmToken = await AsyncStorage.getItem('fcmToken');
   }
   createNewUser(uid) {
-    alert(fcmToken);
     const { firstName, lastName, email, password } = this.state;
     firebase.database().ref('Data/Users/'+uid).set({
       firstName,
@@ -74,7 +73,13 @@ export default class SignUpComponent extends Component {
       response.user.updateProfile({
           displayName: firstName+' '+lastName
       });
-      
+      this.setState({
+        firstName:'',
+        lastName:'',
+        email:'',
+        password:'',
+      });
+      this.props.CommonAction.stopSpinner();
     }).catch((error)=>{
       showToast('Email id already in use');
       console.log('error',error)
@@ -82,7 +87,6 @@ export default class SignUpComponent extends Component {
     });
   }
   signIn() {
-    this.props.CommonAction.startSpinner();
     const { firstName, lastName, email, password } = this.state;
     if (Validators.isEmpty(firstName)) {
 			showToast(CONST.NAME_VALIDATION);
@@ -99,11 +103,18 @@ export default class SignUpComponent extends Component {
 		} else if (Validators.isEmpty(password)) {
 			showToast(CONST.PASSWORD_VALIDATION);
 		} else {	
+      this.props.CommonAction.startSpinner();
 			Keyboard.dismiss;
       this.authenticateUser();
 		}
   }
   navigateToLogin() {
+    this.setState({
+      firstName:'',
+      lastName:'',
+      email:'',
+      password:'',
+    });
     this.props.navigation.navigate('LoginScreen');
   }
   render() {

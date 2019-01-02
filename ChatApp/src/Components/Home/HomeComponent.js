@@ -7,8 +7,8 @@ import CommonHeader from './../CommonHeader/CommonHeader';
 import * as CONST from './../../../utils/Const';
 
 const HomeTab = createMaterialTopTabNavigator({
-  AllUsers : AllUsersContainer,
-  MyChats : MyChatsContainer,
+  AllUsers: {screen : AllUsersContainer, navigationOptions: { title: 'All Users' }},
+  MyChats : {screen : MyChatsContainer, navigationOptions: { title: 'My Chats' }},
 }, {
   tabBarOptions: {
     scrollEnabled: false,
@@ -36,7 +36,7 @@ export default class HomeComponent extends Component {
     return (
       <SafeAreaView style={{flex:1}}>
         <View style={{flex:1, backgroundColor:'white'}}>
-          <CommonHeader/>
+          <CommonHeader screenProps={{ rootNavigation: this.props.navigation }} />
           <HomeTab screenProps={{ rootNavigation: this.props.navigation }} />
         </View>
       </SafeAreaView>

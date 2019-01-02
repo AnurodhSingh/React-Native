@@ -2,20 +2,24 @@ import React, { Component } from 'react';
 import { Text, View, Image, TouchableOpacity, Dimensions, StyleSheet} from 'react-native';
 import * as CONST from './../../../utils/Const';
 import scale from './../../../utils/scale';
+import resetRoute from './../../../utils/resetRoute';
 
 import Entypo from 'react-native-vector-icons/Entypo';
 
 export default class CommonHeaderComponent extends Component {
   constructor(props) {
-		super(props);
-		this.state = {
+    super(props);
+    this.state = {
+        
     };
   }
   render() {
     return (
       <View style={styles.headerStyle}>
         <View style={styles.headerContainerStyle}>
-            <TouchableOpacity style={styles.menuIconContainer}>
+            <TouchableOpacity style={styles.menuIconContainer}
+                onPress={()=>{ resetRoute('SignUpScreen',this.props.screenProps.rootNavigation); }}
+            >
                 <Entypo name='menu' size={40}/>
             </TouchableOpacity>
             <View style={styles.logoContainer}>

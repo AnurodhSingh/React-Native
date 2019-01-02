@@ -9,8 +9,8 @@ export default class LoginComponent extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
-      email:'anurodh123@gmail.com',
-      password:'abc123!@#',
+      email:'',
+      password:'',
     };
   }
   componentDidMount() {
@@ -49,6 +49,10 @@ export default class LoginComponent extends Component {
     });
   }
   navigateToSignUp() {
+    this.setState({
+      email:'',
+      password:'',
+    });
     this.props.navigation.navigate('SignUpScreen');
   }
   render() {
@@ -97,7 +101,7 @@ export default class LoginComponent extends Component {
                 onPress={()=>{this.login()}}
               >
                 <Text style={style.buttonTextStyle}>
-                  {'Get Started'}
+                  {'Login'}
                 </Text>
               </TouchableOpacity>
           </View>

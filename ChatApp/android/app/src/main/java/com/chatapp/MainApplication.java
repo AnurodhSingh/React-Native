@@ -3,6 +3,7 @@ package com.chatapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.react.rnspinkit.RNSpinkitPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.github.yamill.orientation.OrientationPackage;
 import io.invertase.firebase.RNFirebasePackage;
@@ -32,6 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNSpinkitPackage(),
             new VectorIconsPackage(),
             new OrientationPackage(),
             new RNFirebaseAuthPackage(),

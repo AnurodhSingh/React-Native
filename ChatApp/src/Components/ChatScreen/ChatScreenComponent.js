@@ -20,6 +20,7 @@ export default class ChatScreenComponent extends Component {
         };
     }
     componentWillMount() {
+
     }
     getRecieverFcmToken() {
         let { recieverUid } = this.state;
@@ -79,7 +80,7 @@ export default class ChatScreenComponent extends Component {
             createdAt: createdAt,
             user: {
                 _id: recieverUid,
-                name: recieverFirstName +' '+recieverLastName,
+                name: senderFirstName +' '+senderLastName,
             },
         }).then((data) => {
             //success callback

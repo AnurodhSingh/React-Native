@@ -3,27 +3,24 @@ import { View } from 'react-native';
 import styles from './style';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Orientation from 'react-native-orientation';
-import CommonReducer from '../../reducers/CommonReducer';
-// const SpinnerEmt = require('react-native-spinkit');
+import SpinnerEmt from 'react-native-spinkit';
 class Spinner extends Component{
 	constructor(props) {
 		super(props);
 	}
 	componentDidMount() {
-		// Orientation.lockToPortrait();
 	}
 	render() {
 		console.log(this.props.isFetching);
 		if (this.props.isFetching) {
 			return (
 				<View style={styles.spinnerContainer}>
-					{/* <SpinnerEmt
+					<SpinnerEmt
 						style={styles.spinner}
 						size={100}
 						type={'Wave'}
 						color={'#b7b3b3'}
-					/> */}
+					/>
 				</View>
 			);
 		} else {

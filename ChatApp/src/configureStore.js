@@ -20,7 +20,7 @@ const middleware = [sagaMiddleware, reduxMiddleware];
 const persistConfig = {
     key: 'root',
     storage:AsyncStorage,
-	whiteList: ['CommonReducer'],
+	whiteList: ['UserDetailReducer'],
 };
 const persistedReducer = persistReducer(persistConfig, reducer);
 
