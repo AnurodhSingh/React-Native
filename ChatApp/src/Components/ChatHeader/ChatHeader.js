@@ -2,38 +2,49 @@ import React, { Component } from 'react';
 import { Text, View, Image, TouchableOpacity, Dimensions, StyleSheet} from 'react-native';
 import * as CONST from './../../../utils/Const';
 import scale from './../../../utils/scale';
-import resetRoute from './../../../utils/resetRoute'
 export default class ChatHeaderComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
         firstName:this.props.navigation.state.params.item.firstName,
         lastName:this.props.navigation.state.params.item.lastName,
+        image:'',
     };
   }
   render() {
-      let { firstName, lastName } = this.state;
+    let { firstName, lastName } = this.state;
+    let initials=firstName.charAt(0)+lastName.charAt(0);
     return (
         <View style={styles.headerStyle}>
-            <View style={styles.headerContainerStyle}>
-                <TouchableOpacity style={styles.logoContainer}
+            <View style={{alignItems:'center',flexDirection:'row'}}>
+                <TouchableOpacity style={styles.backIconContainer}
                     onPress={()=>{
-                        resetRoute('HomeScreen',this.props.navigation);
+                        this.props.navigation.goBack();
                     }}
                 >
-                    <Image style={styles.logoStyle} source={CONST.BACK_ICON}/>
-                
+                    <Image style={styles.backIconStyle} source={CONST.BACK_ICON}/>
                 </TouchableOpacity>
-                <View style={{alignItems:'center'}}>
-                    <View style={styles.imageContainer}>
-                    </View>
-                    <Text>
-                        {firstName} {lastName}
+                <View style={styles.imageContainer}>
+                    {this.state.image? 
+                        <Image/>
+                        :
+                        <Text>
+                            {initials}
+                        </Text>
+                    }
+                </View>
+            </View>
+            <View style={styles.nameContainer}>
+                <Text style={styles.nameTextStyle}>
+                    {firstName} {lastName}
+                </Text>
+                {
+                    this.props.isTyping 
+                    &&
+                    <Text style={styles.nameTextStyle}>
+                        {'is typing ...'}
                     </Text>
-                </View>
-                <View style={styles.logoContainer}>
-                
-                </View>
+                }
             </View>
         </View>
     );
@@ -44,28 +55,31 @@ const styles= StyleSheet.create({
 	headerStyle: {
         height:scale(60),
 		backgroundColor:CONST.LOGIN_BG_COLOR,
-    },
-    headerContainerStyle: {
         flexDirection:'row',
-        justifyContent:'space-between',
         alignItems:'center',
+        alignSelf:'stretch',
     },
-    menuIconContainer: {
-        paddingHorizontal:scale(20),
-    },
-    logoContainer: {
+    backIconContainer: {
         height: scale(50),
         width: scale(50),
         alignItems:'center',
         justifyContent:'center',
     },
-    logoStyle: {
-        marginLeft: scale(10)
-    },
     imageContainer: {
         height:scale(40),
         width:scale(40),
         borderRadius:scale(20),
-        backgroundColor:'grey'
+        backgroundColor:'rgb(21,119,100)',
+        justifyContent:'center',
+        alignItems:'center',
     },
+    backIconStyle: {
+
+    },
+    nameContainer: {
+        padding:scale(20),
+    },
+    nameTextStyle: {
+        fontSize:scale(16),
+    }
 });

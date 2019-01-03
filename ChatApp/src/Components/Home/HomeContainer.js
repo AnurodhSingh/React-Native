@@ -16,8 +16,9 @@ class HomeContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  const {  } = state;
+  const { UserDetailReducer } = state;
 	return {
+    userDetail: UserDetailReducer.userDetail,
 	};
 }
 

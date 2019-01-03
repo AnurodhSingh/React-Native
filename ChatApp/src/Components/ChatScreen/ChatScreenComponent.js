@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import { Image, Text, View, SafeAreaView, TouchableOpacity, Dimensions, FlatList, ActivityIndicator } from 'react-native';
+import { Image, Text, View, SafeAreaView, TouchableOpacity, Dimensions, FlatList, ActivityIndicator, Keyboard ,NativeModules} from 'react-native';
 import * as firebase from 'react-native-firebase';
 import style from './style';
 import * as CONST from './../../../utils/Const';
 import { GiftedChat,Bubble} from 'react-native-gifted-chat';
 import ChatHeaderComponent from './../ChatHeader/ChatHeader';
 import { MessageStatusIndicator} from './MessageStatusIndicator';
-import { updateMessageStatus } from './../../actions/firebaseAction';
+import { updateMessageStatus, updateIsTyping} from './../../actions/firebaseAction';
 let recieverFcmToken=null;
 
 export default class ChatScreenComponent extends Component {
     constructor(props) {
         messagesRef = null,
+        isTypingRef = null,
         super(props);
         this.state = {
             senderUid: this.props.userDetail.uid,
@@ -20,10 +21,12 @@ export default class ChatScreenComponent extends Component {
             firstMessage: true,
             fetching: true,
             messageArray: [],
+            isTyping:false,
         };
     }
     componentWillMount() {
-
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', ()=>this._keyboardDidShow());
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', ()=>this._keyboardDidHide());
     }
 
     getRecieverFcmToken() {
@@ -48,6 +51,10 @@ export default class ChatScreenComponent extends Component {
 
         this.messagesRef = firebase.database().ref('Data/Chat/' + chatNode);
         this.messagesRef.limitToLast(10).on('child_changed', () => { this.loadMessage(chatNode) });
+    
+        this.isTypingRef = firebase.database().ref('Data/ChatedUser/'+senderUid + '/' +recieverUid );
+        this.isTypingRef.limitToLast(10).on('child_changed', () => { this.updateIsTyping() });
+        this.updateIsTyping();
     }
     loadMessage(chatNode) { 
         let fullName=this.props.userDetail.firstName+' '+this.props.userDetail.lastName;
@@ -181,6 +188,11 @@ export default class ChatScreenComponent extends Component {
         })
     }
 
+    updateIsTyping() {
+        this.isTypingRef.once('value', (snapshot) => {
+            this.setState({isTyping:snapshot.val().isTyping});
+        });
+    }
     _renderBubble(props){
         let fullName=this.props.userDetail.firstName+' '+this.props.userDetail.lastName;
         let messageStatus=false;
@@ -205,7 +217,7 @@ export default class ChatScreenComponent extends Component {
         return (
             <SafeAreaView style={style.safeAreaView}>
                 <View style={style.containerStyle}>
-                    <ChatHeaderComponent {...this.props} />
+                    <ChatHeaderComponent {...this.props} isTyping={this.state.isTyping}/>
                     {fetching ?
                         <View style={{flex:1,justifyContent:'center'}}>
                             <ActivityIndicator size="large" color={CONST.LOGIN_BG_COLOR} />
@@ -224,7 +236,22 @@ export default class ChatScreenComponent extends Component {
             </SafeAreaView>
         );
     }
+    _keyboardDidShow () {
+        let senderUid = this.props.userDetail.uid;
+        let recieverUid = this.props.navigation.state.params.item.uid;
+        updateIsTyping(senderUid, recieverUid,true);
+    }
+    
+    _keyboardDidHide () {
+        let senderUid = this.props.userDetail.uid;
+        let recieverUid = this.props.navigation.state.params.item.uid;
+        updateIsTyping(senderUid, recieverUid,false);
+    }
     componentWillUnmount() {
+        this._keyboardDidHide();
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
         this.messagesRef.off();
+        this.isTypingRef.off();
     }
 }

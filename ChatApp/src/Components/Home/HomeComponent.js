@@ -5,6 +5,7 @@ import AllUsersContainer from './../AllUsers/AllUsersContainer';
 import MyChatsContainer from './../MyChats/MyChatsContainer';
 import CommonHeader from './../CommonHeader/CommonHeader';
 import * as CONST from './../../../utils/Const';
+import { updateUserOnlineStatus } from './../../actions/firebaseAction';
 
 const HomeTab = createMaterialTopTabNavigator({
   AllUsers: {screen : AllUsersContainer, navigationOptions: { title: 'All Users' }},
@@ -32,6 +33,11 @@ export default class HomeComponent extends Component {
 		this.state = {
     };
   }
+  componentDidMount(){
+    setTimeout(() => { 
+      updateUserOnlineStatus(this.props.userDetail.uid,true);
+    }, 1000);
+  }
   render() {
     return (
       <SafeAreaView style={{flex:1}}>
@@ -41,5 +47,8 @@ export default class HomeComponent extends Component {
         </View>
       </SafeAreaView>
     );
+  }
+  componentWillUnmount(){
+    updateUserOnlineStatus(this.props.userDetail.uid,false);
   }
 }
