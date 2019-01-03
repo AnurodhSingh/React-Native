@@ -31,5 +31,3 @@ export const INTERNET_STATUS = 'INTERNET_STATUS';
 export const USER_DETAIL = 'USER_DETAIL';
 
 // Saga constants
-
-export const POST_NOTIFICATION = 'POST_NOTIFICATION';

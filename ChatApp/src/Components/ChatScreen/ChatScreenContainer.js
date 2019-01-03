@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ChatScreenComponent from './ChatScreenComponent';
-import * as pushNotificationAction from './../../actions/pushNotificationAction';
 
 class ChatScreenContainer extends Component {
   constructor(props) {
@@ -25,7 +24,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-    pushNotificationAction: bindActionCreators(pushNotificationAction,dispatch)
+ 
   }
 };
 

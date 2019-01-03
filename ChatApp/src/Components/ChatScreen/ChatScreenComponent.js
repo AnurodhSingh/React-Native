@@ -47,7 +47,7 @@ export default class ChatScreenComponent extends Component {
         this.loadMessage(chatNode);
 
         this.messagesRef = firebase.database().ref('Data/Chat/' + chatNode);
-        this.messagesRef.limitToLast(1).on('child_added', () => { this.loadMessage(chatNode) });
+        this.messagesRef.limitToLast(10).on('child_changed', () => { this.loadMessage(chatNode) });
     }
     loadMessage(chatNode) { 
         let fullName=this.props.userDetail.firstName+' '+this.props.userDetail.lastName;
@@ -179,7 +179,6 @@ export default class ChatScreenComponent extends Component {
             //error callback
             console.log('error ', error)
         })
-        // this.props.pushNotificationAction.sendNotification(payload)
     }
 
     _renderBubble(props){

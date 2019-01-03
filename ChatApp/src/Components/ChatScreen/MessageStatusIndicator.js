@@ -16,7 +16,7 @@ export class MessageStatusIndicator extends Component {
         );
     }
     return (
-      <Text style={{color:'green'}}>
+      <Text style={{color:'rgb(0,135,241)'}}>
         ✔
       </Text>
     );
