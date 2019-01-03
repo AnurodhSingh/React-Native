@@ -3,9 +3,12 @@ import { Image, Text, View, SafeAreaView, TouchableOpacity, Dimensions, FlatList
 import * as firebase from 'react-native-firebase';
 import style from './style';
 import * as CONST from './../../../utils/Const';
-import { GiftedChat } from 'react-native-gifted-chat'
-import ChatHeaderComponent from './../ChatHeader/ChatHeader'
+import { GiftedChat,Bubble} from 'react-native-gifted-chat';
+import ChatHeaderComponent from './../ChatHeader/ChatHeader';
+import { MessageStatusIndicator} from './MessageStatusIndicator';
+import { updateMessageStatus } from './../../actions/firebaseAction';
 let recieverFcmToken=null;
+
 export default class ChatScreenComponent extends Component {
     constructor(props) {
         messagesRef = null,
@@ -22,6 +25,7 @@ export default class ChatScreenComponent extends Component {
     componentWillMount() {
 
     }
+
     getRecieverFcmToken() {
         let { recieverUid } = this.state;
         firebase.database().ref('Data/Users/' + recieverUid).once('value', (snapshot) => {
@@ -39,13 +43,15 @@ export default class ChatScreenComponent extends Component {
         else {
             chatNode = recieverUid + senderUid;
         }
-        this.setState({ chatNode });
+        this.setState({ chatNode});
         this.loadMessage(chatNode);
 
         this.messagesRef = firebase.database().ref('Data/Chat/' + chatNode);
-        this.messagesRef.limitToLast(10).on('child_added', () => { this.loadMessage(chatNode) });
+        this.messagesRef.limitToLast(1).on('child_added', () => { this.loadMessage(chatNode) });
     }
-    loadMessage(chatNode) {
+    loadMessage(chatNode) { 
+        let fullName=this.props.userDetail.firstName+' '+this.props.userDetail.lastName;
+
         firebase.database().ref('Data/Chat/' + chatNode).orderByKey().once('value', (snapshot) => {
             let messageObject = snapshot.val();
             if (messageObject) {
@@ -53,8 +59,11 @@ export default class ChatScreenComponent extends Component {
                 this.setState({ firstMessage: false });
                 snapshot.forEach(function(childSnapshot) {
                     var key = childSnapshot.key;
+                    if(messageObject[key].user.name != fullName){
+                        messageObject[key].messageStatus = true;
+                        updateMessageStatus(chatNode+'/'+key);
+                    }
                     messageArray = [messageObject[key], ...messageArray];
-
                 });
                 this.setState({ messageArray });
             }
@@ -82,6 +91,7 @@ export default class ChatScreenComponent extends Component {
                 _id: recieverUid,
                 name: senderFirstName +' '+senderLastName,
             },
+            messageStatus:false,
         }).then((data) => {
             //success callback
             this.sendPushNotification(messages[0].text);
@@ -158,8 +168,8 @@ export default class ChatScreenComponent extends Component {
         let payload = {
             "message" : text,
             "token" : recieverFcmToken,
-            "sender" : senderFirstName + senderLastName,
-            "reciever" : recieverFirstName + recieverLastName
+            "sender" : senderFirstName + ' ' + senderLastName,
+            "reciever" : recieverFirstName + ' ' + recieverLastName
         }
         firebase.database().ref('Data/Notification/').set({
             ...payload
@@ -170,6 +180,25 @@ export default class ChatScreenComponent extends Component {
             console.log('error ', error)
         })
         // this.props.pushNotificationAction.sendNotification(payload)
+    }
+
+    _renderBubble(props){
+        let fullName=this.props.userDetail.firstName+' '+this.props.userDetail.lastName;
+        let messageStatus=false;
+        if(fullName != props.currentMessage.user.name){
+            messageStatus=false;
+        }
+        else{
+            messageStatus = props.currentMessage.messageStatus;
+        }
+        return(
+            <View style={{paddingRight: 12}}>
+                <View style={{position: 'absolute', right: -1, bottom: 0}}>
+                    <MessageStatusIndicator  messageStatus={messageStatus}/>
+                </View>
+                <Bubble {...props} />
+            </View>
+        )
     }
 
     render() {
@@ -189,6 +218,7 @@ export default class ChatScreenComponent extends Component {
                             user={{
                                 _id: recieverUid,
                             }}
+                            renderBubble={(props)=>this._renderBubble(props)}
                         />
                     }
                 </View>
