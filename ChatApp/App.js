@@ -18,7 +18,8 @@ export default class App extends Component<Props> {
 
   async componentDidMount() {
 		Orientation.lockToPortrait();
-    this.checkPermission();
+    this.checkPermission();  
+    this.createNotificationListeners();
   }
   
   async checkPermission() {
@@ -37,6 +38,7 @@ export default class App extends Component<Props> {
         if (fcmToken) {
             // user has a device token
             await AsyncStorage.setItem('fcmToken', fcmToken);
+            firebase.messaging().subscribeToTopic(fcmToken);
         }
     }
   }
@@ -51,7 +53,52 @@ export default class App extends Component<Props> {
         console.log('permission rejected');
     }
   }
+    
+  async createNotificationListeners() {
+    /*
+    * Triggered when a particular notification has been received in foreground
+    * */
+    this.notificationListener = firebase.notifications().onNotification((notification) => {
+        const { title, body } = notification;
+        // this.showAlert(title, body);
+    });
+    
+    /*
+    * If your app is in background, you can listen for when a notification is clicked / tapped / opened as follows:
+    * */
+    this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen) => {
+        // const { title, body } = notificationOpen.notification;
+        // this.showAlert(title, body);
+      // alert(JSON.stringify(notificationOpen.notification));
+    });
   
+    /*
+    * If your app is closed, you can check if it was opened by a notification being clicked / tapped / opened as follows:
+    * */
+    const notificationOpen = await firebase.notifications().getInitialNotification();
+    if (notificationOpen) {
+        // const { title, body } = notificationOpen.notification;
+        // this.showAlert(title, body);
+      // alert(JSON.stringify(notificationOpen.notification));
+    }
+    /*
+    * Triggered for data only payload in foreground
+    * */
+    this.messageListener = firebase.messaging().onMessage((message) => {
+      //process data message
+      // alert(JSON.stringify(message));
+    });
+  }
+  
+  showAlert(title, body) {
+    Alert.alert(
+      title, body,
+      [
+          { text: 'OK', onPress: () => console.log('OK Pressed') },
+      ],
+      { cancelable: false },
+    );
+  }
   // update(fname='Anurodh',lname='Singh'){
   //   console.log("hello",firebase.database().ref());
   //   firebase.database().ref('Data').set({
@@ -83,6 +130,11 @@ export default class App extends Component<Props> {
         </Provider>
       </View>
     );
+  }
+
+  componentWillUnmount() {
+    this.notificationListener();
+    this.notificationOpenedListener();
   }
 }
 

@@ -25,7 +25,9 @@
     "redux": "^3.7.2",
     "redux-persist": "^5.4.0",
     "redux-persist-transform-filter": "0.0.18",
-    "redux-saga": "^0.14.6"
+    "redux-saga": "^0.14.6",
+    "tslint": "^5.12.0",
+    "typescript": "^3.2.2"
   },
   "devDependencies": {
     "@babel/runtime": "^7.1.2",

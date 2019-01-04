@@ -108,10 +108,11 @@ export default class ChatScreenComponent extends Component {
             console.log('error ', error)
         });
         if (firstMessage) {
-            firebase.database().ref('Data/ChatedUser/' + senderUid + '/' + recieverUid).set({
+            firebase.database().ref('Data/ChatedUser/' + senderUid + '/' + recieverUid).update({
                 chatRef: chatNode,
                 lastMessage: messages[0].text,
                 firstName:recieverFirstName,
+                isTyping:false,
                 lastName:recieverLastName,
                 createdAt
             }).then((data) => {
@@ -122,10 +123,11 @@ export default class ChatScreenComponent extends Component {
                 console.log('error ', error)
             });
 
-            firebase.database().ref('Data/ChatedUser/' + recieverUid + '/' + senderUid).set({
+            firebase.database().ref('Data/ChatedUser/' + recieverUid + '/' + senderUid).update({
                 chatRef: chatNode,
                 lastMessage: messages[0].text,
                 firstName:senderFirstName,
+                isTyping:false,
                 lastName:senderLastName,
                 createdAt
             }).then((data) => {
@@ -137,10 +139,11 @@ export default class ChatScreenComponent extends Component {
             });
         }
         else{ 
-            firebase.database().ref('Data/ChatedUser/' + senderUid + '/' + recieverUid).set({
+            firebase.database().ref('Data/ChatedUser/' + senderUid + '/' + recieverUid).update({
                 chatRef: chatNode,
                 lastMessage: messages[0].text,
                 firstName:recieverFirstName,
+                isTyping:false,
                 lastName:recieverLastName,
                 createdAt
             }).then((data) => {
@@ -151,10 +154,11 @@ export default class ChatScreenComponent extends Component {
                 console.log('error ', error)
             });
 
-            firebase.database().ref('Data/ChatedUser/' + recieverUid + '/' + senderUid).set({
+            firebase.database().ref('Data/ChatedUser/' + recieverUid + '/' + senderUid).update({
                 chatRef: chatNode,
                 lastMessage: messages[0].text,
                 firstName:senderFirstName,
+                isTyping:false,
                 lastName:senderLastName,
                 createdAt
             }).then((data) => {
@@ -185,7 +189,7 @@ export default class ChatScreenComponent extends Component {
         }).catch((error) => {
             //error callback
             console.log('error ', error)
-        })
+        });
     }
 
     updateIsTyping() {

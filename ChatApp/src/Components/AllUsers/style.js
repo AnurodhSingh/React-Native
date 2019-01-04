@@ -23,8 +23,8 @@ module.exports = StyleSheet.create({
         backgroundColor:CONST.LOGIN_BG_COLOR,
         margin:scale(10),
         marginBottom:0,
-        padding:scale(10),
-        paddingHorizontal:scale(20)
+        paddingHorizontal:scale(10),
+        borderRadius:scale(10)
     },
     cheveronStyle :{
         width: scale(20), 
