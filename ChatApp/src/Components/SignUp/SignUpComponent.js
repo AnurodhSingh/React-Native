@@ -172,7 +172,6 @@ export default class SignUpComponent extends Component {
               secureTextEntry={true}
               ref={component => this.password = component}
               onChangeText={(password) => this.setState({ password })}
-              keyboardType={'email-address'}
               style={style.textInputStyle}
             />
             <TouchableOpacity
