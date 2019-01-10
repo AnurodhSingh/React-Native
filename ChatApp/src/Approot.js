@@ -7,7 +7,7 @@ import SplashScreen from './Components/SplashScreen/SplashScreen';
 import { createStackNavigator} from 'react-navigation';
 
 export default createStackNavigator({
-	SplashScreen: { screen: SplashScreen, navigationOptions: { header: null } },
+	// SplashScreen: { screen: SplashScreen, navigationOptions: { header: null } },
 	SignUpScreen: { screen: SignUpContainer, navigationOptions: { header: null } },
 	LoginScreen: { screen: LoginContainer, navigationOptions: { header: null } },
 	HomeScreen: { screen: HomeContainer, navigationOptions: { header: null } },

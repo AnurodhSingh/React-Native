@@ -12,11 +12,11 @@ module.exports = StyleSheet.create({
 	},
 	logoContainer: {
 		alignItems: 'center',
-		paddingTop: verticalScale(60),
+		paddingTop: verticalScale(20),
 	},
 	logoStyle: {
-		height: scale(60),
-		width: scale(100),
+		height: scale(45),
+		width: scale(75),
 	},
 	logoTextStyle: {
 		paddingVertical: scale(10),
@@ -30,7 +30,7 @@ module.exports = StyleSheet.create({
 		// backgroundColor:'green'
 	},
 	textInputStyle: {
-		marginTop: scale(20),
+		marginTop: scale(15),
 		marginHorizontal: scale(20),
 		borderWidth: 1,
 		borderRadius: scale(25),
@@ -46,7 +46,7 @@ module.exports = StyleSheet.create({
 		color:'white'
 	},
 	buttonStyle: {
-		marginTop: scale(30),
+		marginTop: scale(20),
 		marginHorizontal: scale(60),
 		borderWidth: 1,
 		borderRadius: scale(25),

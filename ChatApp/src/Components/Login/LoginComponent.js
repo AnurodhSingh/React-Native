@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, SafeAreaView, TouchableOpacity,Image,TextInput,AsyncStorage} from 'react-native';
+import { Text, View, SafeAreaView, TouchableOpacity,Image,TextInput,AsyncStorage, ScrollView} from 'react-native';
 import style from './style';
 import Validators from '../../../utils/Validator';
 import showToast from '../../../utils/Toast/index';
@@ -79,7 +79,7 @@ export default class LoginComponent extends Component {
             <Image style={style.logoStyle} source={CONST.LOGO}/>
             <Text style={style.logoTextStyle}>CHAT APP</Text>
           </View>
-          <View style={style.bottomContainer}>
+          <ScrollView style={style.bottomContainer}>
               <TextInput
                 underlineColorAndroid={'transparent'}
                 returnKeyType='next'
@@ -112,7 +112,7 @@ export default class LoginComponent extends Component {
                   {'Login'}
                 </Text>
               </TouchableOpacity>
-          </View>
+          </ScrollView>
         </View>
       </SafeAreaView>
     );

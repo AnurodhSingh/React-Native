@@ -8,4 +8,6 @@ target 'ChatApp' do
   pod 'Firebase/Database'
   pod 'react-native-spinkit', :path => '../node_modules/react-native-spinkit'
 
+  pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
+
 end

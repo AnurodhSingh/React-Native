@@ -62,7 +62,7 @@ class SplashScreen extends Component<Props> {
                 {character.map((object,index)=>{
                     return(
                     <Animated.View style={{marginBottom}}>
-                        <Animated.Text style={{transform: [{rotate}], fontSize:20}}>
+                        <Animated.Text style={{transform: [{rotate}], fontSize:20, fontWeight: 'bold',color: CONST.WHITE_COLOR,}}>
                             {object}
                         </Animated.Text>
                     </Animated.View>

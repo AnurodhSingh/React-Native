@@ -22,7 +22,8 @@ module.exports = StyleSheet.create({
 	},
 	logoContainer: {
 		alignItems: 'center',
-		paddingVertical: verticalScale(100),
+		paddingTop: verticalScale(100),
+		paddingBottom: verticalScale(20)
 	},
 	logoStyle: {
 		height: scale(60),
