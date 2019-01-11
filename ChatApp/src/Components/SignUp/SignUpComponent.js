@@ -31,14 +31,16 @@ export default class SignUpComponent extends Component {
   async getFCMToken() {
     fcmToken = await AsyncStorage.getItem('fcmToken');
   }
-  createNewUser(uid) {
-    const { firstName, lastName, email, password } = this.state;
+  async createNewUser(uid) {
+    await this.uploadImage(this.state.imageUrl);
+    const { firstName, lastName, email, password, imageUrl } = this.state;
     firebase.database().ref('Data/Users/'+uid).set({
       firstName,
       lastName,
       email,
       password,
-      fcmToken
+      fcmToken,
+      imageUrl
     }).then((data)=>{
         //success callback
         console.log('data ' , data)
@@ -49,6 +51,7 @@ export default class SignUpComponent extends Component {
           password,
           uid,
           fcmToken,
+          imageUrl
         });
     }).catch((error)=>{
         //error callback
@@ -60,16 +63,17 @@ export default class SignUpComponent extends Component {
       lastName:'',
       email:'',
       password:'',
-    })
+      imageUrl: null,
+    });
   }
-  authenticateUser() {
+  async authenticateUser() {
     let{
       email,
       password,
       firstName,
-      lastName
+      lastName,
+      imageUrl
     } = this.state;
-
     firebase.auth().createUserWithEmailAndPassword(email, password).then((response)=>{
       showToast('Account created successfully');
       this.props.navigation.navigate('LoginScreen');
@@ -78,18 +82,20 @@ export default class SignUpComponent extends Component {
       response.user.updateProfile({
           displayName: firstName+' '+lastName
       });
+      this.props.CommonAction.stopSpinner();
+    }).catch((error)=>{
+      showToast('Email id already in use');
+      console.log('error',error);
       this.setState({
         firstName:'',
         lastName:'',
         email:'',
         password:'',
+        imageUrl: null,
       });
       this.props.CommonAction.stopSpinner();
-    }).catch((error)=>{
-      showToast('Email id already in use');
-      console.log('error',error)
-      this.props.CommonAction.stopSpinner();
     });
+
   }
   signIn() {
     const { firstName, lastName, email, password } = this.state;
@@ -119,8 +125,18 @@ export default class SignUpComponent extends Component {
       lastName:'',
       email:'',
       password:'',
+      imageUrl: null,
     });
     this.props.navigation.navigate('LoginScreen');
+  }
+
+  async uploadImage(imageUrl){
+    const imageRef = firebase.storage().ref('images').child(this.state.email+'.jpg');
+    let mime = 'image/jpg';
+    return imageRef.put(imageUrl, { contentType: mime }).then((snapshot)=>{
+      this.setState({imageUrl:snapshot.downloadURL});
+      return true;
+    });
   }
 
   openImagePicker() {
@@ -129,7 +145,9 @@ export default class SignUpComponent extends Component {
       height: 400,
       cropping: true
     }).then(image => {
-      alert(JSON.stringify(image));
+      this.setState({imageUrl: image.path});
+    }).catch((error)=>{
+      
     });
   }
 
@@ -146,7 +164,7 @@ export default class SignUpComponent extends Component {
               onPress={()=>this.openImagePicker()}
             >
               {this.state.imageUrl ? 
-                <Image src={imageUrl}/>
+                <Image style={{height:95,width:95,borderRadius:50,borderColor:'grey',borderWidth:1,alignItems:'center',justifyContent:'center'}} source={{uri:this.state.imageUrl}}/>
                 :
                 <UserIcon name="adduser" size={40} color={CONST.LOGIN_BG_COLOR}/> 
               }

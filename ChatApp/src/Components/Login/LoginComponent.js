@@ -77,7 +77,7 @@ export default class LoginComponent extends Component {
           </View>
           <View style={style.logoContainer}>
             <Image style={style.logoStyle} source={CONST.LOGO}/>
-            <Text style={style.logoTextStyle}>CHAT APP</Text>
+            <Text style={style.logoTextStyle}>C H A T  A P P</Text>
           </View>
           <ScrollView style={style.bottomContainer}>
               <TextInput

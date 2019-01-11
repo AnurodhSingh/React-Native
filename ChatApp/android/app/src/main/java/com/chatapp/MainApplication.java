@@ -18,6 +18,7 @@ import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.database.RNFirebaseDatabasePackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
+import io.invertase.firebase.storage.RNFirebaseStoragePackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +45,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFirebaseNotificationsPackage(),
             new RNFirebasePackage(),
             new RNFetchBlobPackage(),
-            new RNDeviceInfo()
+            new RNDeviceInfo(),
+            new RNFirebaseStoragePackage()
       );
     }
 
