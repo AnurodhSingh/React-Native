@@ -24,6 +24,25 @@ module.exports = StyleSheet.create({
 		fontWeight: 'bold',
 		color: CONST.WHITE_COLOR,
 	},
+	imagePickerContainerStyle: {
+		backgroundColor:"#cccccc",
+		height:scale(100),
+		width:scale(100),
+		borderRadius:scale(50),
+		borderColor:'grey',
+		borderWidth:1,
+		alignItems:'center',
+		justifyContent:'center'
+	},
+	imageStyle: {
+		height:scale(90),
+		width:scale(90),
+		borderRadius:scale(45),
+		borderColor:'grey',
+		borderWidth:1,
+		alignItems:'center',
+		justifyContent:'center'
+	},
 	bottomContainer: {
 		flex: 1,
 		alignSelf: 'stretch',

@@ -6,6 +6,11 @@ import MyChatsContainer from './../MyChats/MyChatsContainer';
 import CommonHeader from './../CommonHeader/CommonHeader';
 import * as CONST from './../../../utils/Const';
 import { updateUserOnlineStatus } from './../../actions/firebaseAction';
+import MyDrawerNavigator from './../../Components/MyDrawerNavigator/MyDrawerNavigatorComponent';
+import Drawer from 'react-native-drawer';
+const drawerStyles = {
+    drawer: { shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3},
+  }
 
 const HomeTab = createMaterialTopTabNavigator({
   AllUsers: {screen : AllUsersContainer, navigationOptions: { title: 'All Users' }},
@@ -38,12 +43,32 @@ export default class HomeComponent extends Component {
       updateUserOnlineStatus(this.props.userDetail.uid,true);
     }, 1000);
   }
+
+  closeControlPanel = () => {
+    this._drawer.close()
+  };
+
+  openControlPanel = () => {
+    this._drawer.open()
+  };
+
   render() {
     return (
       <SafeAreaView style={{flex:1}}>
         <View style={{flex:1, backgroundColor:'white'}}>
-          <CommonHeader screenProps={{ rootNavigation: this.props.navigation }} />
-          <HomeTab screenProps={{ rootNavigation: this.props.navigation }} />
+          <Drawer
+            type="overlay"
+            ref={(ref) => this._drawer = ref}
+            content={<MyDrawerNavigator  screenProps={{ rootNavigation: this.props.navigation }}/>}
+            style={drawerStyles}
+            tapToClose={true}
+            openDrawerOffset={0.35} // 20% gap on the right side of drawer
+            panCloseMask={0.2}
+            closedDrawerOffset={-3}
+          >
+            <CommonHeader screenProps={{ rootNavigation: this.props.navigation }}  openDrawer={()=>this.openControlPanel()}/>
+            <HomeTab screenProps={{ rootNavigation: this.props.navigation }} />
+          </Drawer>
         </View>
       </SafeAreaView>
     );

@@ -160,11 +160,11 @@ export default class SignUpComponent extends Component {
             <Text style={style.logoTextStyle}>C H A T  A P P</Text>
           </View>
           <View style={{alignItems:'center'}}>
-            <TouchableOpacity style={{backgroundColor:"#cccccc",height:100,width:100,borderRadius:50,borderColor:'grey',borderWidth:1,alignItems:'center',justifyContent:'center'}}
+            <TouchableOpacity style={style.imagePickerContainerStyle}
               onPress={()=>this.openImagePicker()}
             >
               {this.state.imageUrl ? 
-                <Image style={{height:95,width:95,borderRadius:50,borderColor:'grey',borderWidth:1,alignItems:'center',justifyContent:'center'}} source={{uri:this.state.imageUrl}}/>
+                <Image style={style.imageStyle} source={{uri:this.state.imageUrl}}/>
                 :
                 <UserIcon name="adduser" size={40} color={CONST.LOGIN_BG_COLOR}/> 
               }

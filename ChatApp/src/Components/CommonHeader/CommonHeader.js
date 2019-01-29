@@ -6,26 +6,22 @@ import * as CONST from './../../../utils/Const';
 import scale from './../../../utils/scale';
 import resetRoute from './../../../utils/resetRoute';
 import * as authenticationAction from './../../actions/authenticationAction';
-
 import Entypo from 'react-native-vector-icons/Entypo';
 
 class CommonHeaderComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        
+        openDrawer:false,
     };
   }
-  userLogout(){
-    this.props.authenticationAction.userLogout();
-    resetRoute('SignUpScreen',this.props.screenProps.rootNavigation); 
-  }
+
   render() {
     return (
       <View style={styles.headerStyle}>
-        <View style={styles.headerContainerStyle}>
+        <View style={styles.headerContainerStyle}> 
             <TouchableOpacity style={styles.menuIconContainer}
-                onPress={()=>{ this.userLogout(); }}
+                onPress={()=>{ this.props.openDrawer(); }}
             >
                 <Entypo name='menu' size={40}/>
             </TouchableOpacity>

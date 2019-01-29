@@ -38,3 +38,16 @@ export function updateUserOnlineStatus(uid,isOnline){
         console.log('error ' , error)
     })
 }
+
+export function updateUserImageDetail(uid,value){
+    firebase.database().ref('Data/Users/'+uid).update({
+        imageUrl:value,
+    }).then((data)=>{
+        //success callback
+        console.log('data ' , data)
+    }).catch((error)=>{
+        //error callback
+        console.log('error ' , error)
+    })
+}
+

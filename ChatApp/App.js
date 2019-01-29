@@ -6,6 +6,7 @@ import firebase from 'react-native-firebase';
 import Spinner from './src/Components/Spinner/index';
 import Approot from './src/Approot';
 import Orientation from 'react-native-orientation';
+
 type Props = {};
 export default class App extends Component<Props> {
   constructor(props) {
@@ -118,7 +119,6 @@ export default class App extends Component<Props> {
   //       console.log("here",snapshot.val())
   //   });
   // } 
-
   render() {
     return (
       <View style={styles.container}>
