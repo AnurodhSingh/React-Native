@@ -20,8 +20,7 @@ export default class MyChatsComponent extends Component {
     let {uid} = this.props.userDetail;
     this.messagesRef = firebase.database().ref('Data/ChatedUser/'+uid);
     this.loadMychats();
-    this.messagesRef.limitToLast(1).on('child_changed', () => { this.loadMychats()});
-    this.messagesRef.limitToLast(1).on('child_added', () => { this.loadMychats()});
+    this.messagesRef.on('child_changed', () => { this.loadMychats()});
   }
   loadMychats() {
     let {uid} = this.props.userDetail;

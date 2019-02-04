@@ -23,6 +23,8 @@ export default class SettingsComponent extends Component {
       firstName:'',
       lastName:'',
       imageUrl:'',
+      imageCollipsible:true,
+      nameCollipsible:true,
     };
   }
   componentDidMount() {
@@ -74,16 +76,24 @@ export default class SettingsComponent extends Component {
       showToast('please select an image to upload.')
     }
     else {
+      const {
+        uid,
+        email,
+        password,
+        firstName,
+        lastName,
+        imageUrl,
+      } = this.state;
       const imageRef = firebase.storage().ref('images').child(this.state.email+'.jpg');
       let mime = 'image/jpg';
       imageRef.put(imageUrl, { contentType: mime }).then((snapshot)=>{
         this.setState({imageUrl : snapshot.downloadURL});
         showToast('Image uploaded successfully.')
         updateUserImageDetail(uid,snapshot.downloadURL);
-        this.props.UserDetailAction.saveUserDetail({...this.state})
+        this.props.UserDetailAction.saveUserDetail({uid, email, password, firstName, lastName, imageUrl})
         return true;
       }).catch((error)=>{
-        showToast(error);
+        showToast('please select a proper image to upload.');
       });
     }
   }
@@ -107,12 +117,12 @@ export default class SettingsComponent extends Component {
           <ScrollView style={{flex:1}}>
             <TouchableOpacity 
               style={style.headerStyle}
-              onPress={() =>this.setState({isCollapsed: !this.state.isCollapsed})}>
+              onPress={() =>this.setState({imageCollipsible: !this.state.imageCollipsible})}>
               <Text style={style.headerTextStyle}>
                 Image
               </Text>
             </TouchableOpacity>
-            <Collapsible collapsed={this.state.isCollapsed}>
+            <Collapsible collapsed={this.state.imageCollipsible}>
               <View style={style.bodyContainerStyle}>
                 <TouchableOpacity style={style.imagePickerContainerStyle}
                   onPress={()=>this.openImagePicker()}
@@ -134,18 +144,89 @@ export default class SettingsComponent extends Component {
             </Collapsible>
             <TouchableOpacity 
               style={style.headerStyle}
-              onPress={() =>this.setState({isCollapsed: !this.state.isCollapsed})}>
+              onPress={() =>this.setState({nameCollipsible: !this.state.nameCollipsible})}>
               <Text style={style.headerTextStyle}>
-                Image
+                Name
               </Text>
             </TouchableOpacity>
-            <Collapsible collapsed={this.state.isCollapsed}>
+            <Collapsible collapsed={this.state.nameCollipsible}>
               <View style={{height:100,alignSelf:'stretch'}}>
                 <Text>
                   ghghghjygjhghj
                 </Text>
               </View>
             </Collapsible>
+            <TouchableOpacity 
+              style={style.headerStyle}
+              onPress={() =>this.setState({nameCollipsible: !this.state.nameCollipsible})}>
+              <Text style={style.headerTextStyle}>
+                Name
+              </Text>
+            </TouchableOpacity>
+            <Collapsible collapsed={this.state.nameCollipsible}>
+              <View style={{height:100,alignSelf:'stretch'}}>
+                <Text>
+                  ghghghjygjhghj
+                </Text>
+              </View>
+            </Collapsible>
+            <TouchableOpacity 
+              style={style.headerStyle}
+              onPress={() =>this.setState({nameCollipsible: !this.state.nameCollipsible})}>
+              <Text style={style.headerTextStyle}>
+                Name
+              </Text>
+            </TouchableOpacity>
+            <Collapsible collapsed={this.state.nameCollipsible}>
+              <View style={{height:100,alignSelf:'stretch'}}>
+                <Text>
+                  ghghghjygjhghj
+                </Text>
+              </View>
+            </Collapsible>
+            <TouchableOpacity 
+              style={style.headerStyle}
+              onPress={() =>this.setState({nameCollipsible: !this.state.nameCollipsible})}>
+              <Text style={style.headerTextStyle}>
+                Name
+              </Text>
+            </TouchableOpacity>
+            <Collapsible collapsed={this.state.nameCollipsible}>
+              <View style={{height:100,alignSelf:'stretch'}}>
+                <Text>
+                  ghghghjygjhghj
+                </Text>
+              </View>
+            </Collapsible>
+            <TouchableOpacity 
+              style={style.headerStyle}
+              onPress={() =>this.setState({nameCollipsible: !this.state.nameCollipsible})}>
+              <Text style={style.headerTextStyle}>
+                Name
+              </Text>
+            </TouchableOpacity>
+            <Collapsible collapsed={this.state.nameCollipsible}>
+              <View style={{height:100,alignSelf:'stretch'}}>
+                <Text>
+                  ghghghjygjhghj
+                </Text>
+              </View>
+            </Collapsible>
+            <TouchableOpacity 
+              style={style.headerStyle}
+              onPress={() =>this.setState({nameCollipsible: !this.state.nameCollipsible})}>
+              <Text style={style.headerTextStyle}>
+                Name
+              </Text>
+            </TouchableOpacity>
+            <Collapsible collapsed={this.state.nameCollipsible}>
+              <View style={{height:100,alignSelf:'stretch'}}>
+                <Text>
+                  ghghghjygjhghj
+                </Text>
+              </View>
+            </Collapsible>
+
           </ScrollView>
         </View>
       </SafeAreaView>

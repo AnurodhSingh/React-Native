@@ -19,6 +19,8 @@ import io.invertase.firebase.database.RNFirebaseDatabasePackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import io.invertase.firebase.storage.RNFirebaseStoragePackage;
+import io.invertase.firebase.admob.RNFirebaseAdMobPackage;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,18 +37,19 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new PickerPackage(),
-            new RNSpinkitPackage(),
-            new VectorIconsPackage(),
-            new OrientationPackage(),
-            new RNFirebaseAuthPackage(),
-            new RNFirebaseDatabasePackage(),
-            new RNFirebaseMessagingPackage(),
-            new RNFirebaseNotificationsPackage(),
-            new RNFirebasePackage(),
-            new RNFetchBlobPackage(),
-            new RNDeviceInfo(),
-            new RNFirebaseStoragePackage()
+          new PickerPackage(),
+          new RNSpinkitPackage(),
+          new VectorIconsPackage(),
+          new OrientationPackage(),
+          new RNFirebaseAuthPackage(),
+          new RNFirebaseDatabasePackage(),
+          new RNFirebaseMessagingPackage(),
+          new RNFirebaseNotificationsPackage(),
+          new RNFirebasePackage(),
+          new RNFetchBlobPackage(),
+          new RNDeviceInfo(),
+          new RNFirebaseStoragePackage(),
+          new RNFirebaseAdMobPackage()
       );
     }
 
@@ -65,5 +68,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    MobileAds.initialize(this, "ca-app-pub-7574165853782980~2842293139");
   }
 }

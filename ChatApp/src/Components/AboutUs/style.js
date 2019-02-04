@@ -10,7 +10,9 @@ module.exports = StyleSheet.create({
 	mainContainerStyle: {
 		flex: 1,
 		justifyContent:'center',
-		backgroundColor: CONST.LOGIN_BG_COLOR
+		paddingBottom:scale(10),
+		paddingRight:scale(10),
+		// backgroundColor: CONST.LOGIN_BG_COLOR
 	},
 	bodyContainerStyle: {
 		flex: 1,
@@ -24,6 +26,7 @@ module.exports = StyleSheet.create({
 	},
 	headerTextStyle: {
 		paddingHorizontal: scale(10),
-		fontSize: scale(16)
+		fontSize: scale(16),
+		fontWeight: 'bold'
 	}
 });

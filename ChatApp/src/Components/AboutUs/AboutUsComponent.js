@@ -3,6 +3,8 @@ import { Text, View, SafeAreaView, TouchableOpacity,Image,TextInput,AsyncStorage
 import style from './style';
 import Collapsible from 'react-native-collapsible';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialIcons';
+
 class CollapsibleView extends Component {
   constructor(props) {
 		super(props);
@@ -12,8 +14,8 @@ class CollapsibleView extends Component {
       valueName: this.props.valueName || 'null'
     };
   }
-  UNSAFE_componentWillReceiveProps(){
-    this.setState({isCollapsed:true});
+  UNSAFE_componentWillReceiveProps(nextProp){
+    this.setState({isCollapsed:true, valueName: nextProp.valueName, keyName: nextProp.keyName});
   }
   show(data) {
     if(typeof data === 'object'){
@@ -28,10 +30,10 @@ class CollapsibleView extends Component {
           let keyName = Object.keys(data)[index];
           let valueName = data[keyName];
           return(
-            <View style={{marginLeft: 25, borderLeftWidth:lastIndex ? 0 : 1, }} >    
-              <View style={{position:'absolute',height:15,borderLeftWidth:lastIndex ? 1 : 0}}>
+            <View style={{marginLeft: 40, borderLeftWidth:lastIndex ? 0 : .5 }} >    
+              <View style={{position:'absolute',height:15,borderLeftWidth:lastIndex ? 0.5 : 0}}>
               </View>
-              <CollapsibleView keyName = {keyName} valueName = {valueName} isCollapsed = {true} lastIndex = {lastIndex}/>
+              <CollapsibleView keyName = {keyName} valueName = {valueName} isCollapsed = {false} lastIndex = {lastIndex}/>
             </View>
           );
         })
@@ -39,9 +41,10 @@ class CollapsibleView extends Component {
     }
     else {
       return(
-        <View style={{marginLeft: 35, marginBottom:5}} >
-          <Text style={{color:'white'}}>
-            {data}
+        <View style={{marginLeft: 35, marginBottom:5, flexDirection: 'row', alignItems:'center'}}>
+          <MaterialCommunityIcons color={'black'} style={{opacity: 0.5}} name='subdirectory-arrow-right' size={16}/>
+          <Text style={{color:'orange', fontWeight: 'bold'}}>
+           {data}
           </Text>
         </View>
       );
@@ -53,9 +56,9 @@ class CollapsibleView extends Component {
       <View>
         <View style={style.headerStyle}>
           {this.state.isCollapsed ?
-            <AntDesign name='plus' size={16}/>
+            <AntDesign color={'green'} name='plus' size={16}/>
             :
-            <AntDesign name='minus' size={16}/>
+            <AntDesign color={'red'} name='minus' size={16}/>
           }
           <TouchableOpacity
             onPress={()=> {this.setState({isCollapsed:!this.state.isCollapsed})}}
@@ -77,27 +80,44 @@ export default class AboutUsComponent extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
+      data:null,
     };
   }
   componentDidMount() {
-
+    fetch(`https://salty-plateau-94309.herokuapp.com/users`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(res=>{
+      console.log("res", res)
+      let data = JSON.parse(res._bodyInit);
+      this.setState({ data });
+    }).catch(err=>{
+      console.log("err", err)
+    });
   }
 
   componentWillMount(){
   }
 
   render() {
-    let data = {
-      hey:{"id":"1010","name":"Anurodh","password":"anurodh11","__v":0},
-      hello:{"id":"1036","name":"Mansi","password":"mansi36","__v":0,bye:{"id":"1036","name":"Mansi","password":"mansi36","__v":0}},
-    }
+    let { data } = this.state;
     return (
       <SafeAreaView style={style.safeAreaViewStyle}>
         <View style={style.mainContainerStyle}>
-          <ScrollView style={style.bodyContainerStyle}>
-            <View style={{marginHorizontal: 10}} >    
-              <CollapsibleView keyName = {'data'} valueName = {data} isCollapsed={true}/>
-            </View>
+          <ScrollView  
+            style={style.bodyContainerStyle}
+            horizontal={true}
+          >
+            <ScrollView
+              style={style.bodyContainerStyle}
+            >
+              <View style={{marginHorizontal: 10}}>    
+                <CollapsibleView keyName = {'data'} valueName = {data} isCollapsed = {true}/>
+              </View>
+            </ScrollView>
           </ScrollView>
         </View>
       </SafeAreaView>

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, SafeAreaView, TouchableOpacity, Dimensions} from 'react-native';
+import { Text, View, SafeAreaView, TouchableOpacity, Dimensions, ScrollView} from 'react-native';
 import {createMaterialTopTabNavigator} from 'react-navigation';
 import AllUsersContainer from './../AllUsers/AllUsersContainer';
 import MyChatsContainer from './../MyChats/MyChatsContainer';
 import CommonHeader from './../CommonHeader/CommonHeader';
+import AdComponent from './../AdComponent/AdComponent';
+
 import * as CONST from './../../../utils/Const';
 import { updateUserOnlineStatus } from './../../actions/firebaseAction';
 import MyDrawerNavigator from './../../Components/MyDrawerNavigator/MyDrawerNavigatorComponent';
@@ -66,8 +68,11 @@ export default class HomeComponent extends Component {
             panCloseMask={0.2}
             closedDrawerOffset={-3}
           >
-            <CommonHeader screenProps={{ rootNavigation: this.props.navigation }}  openDrawer={()=>this.openControlPanel()}/>
-            <HomeTab screenProps={{ rootNavigation: this.props.navigation }} />
+            <View style={{flex:1}}>
+              <CommonHeader screenProps={{ rootNavigation: this.props.navigation }} openDrawer={()=>this.openControlPanel()}/>
+              <HomeTab screenProps={{ rootNavigation: this.props.navigation }}/>
+            </View>
+            <AdComponent/>
           </Drawer>
         </View>
       </SafeAreaView>

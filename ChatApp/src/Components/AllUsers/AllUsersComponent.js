@@ -73,6 +73,7 @@ export default class AllUsersComponent extends Component {
           </View>
           :
           <FlatList
+            style={{flex:1}}
             data={this.state.users}
             keyExtractor={(item,index)=>''+index}
             renderItem={({item})=>this._renderItems(item)}

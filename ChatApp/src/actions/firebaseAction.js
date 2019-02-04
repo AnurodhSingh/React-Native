@@ -40,6 +40,7 @@ export function updateUserOnlineStatus(uid,isOnline){
 }
 
 export function updateUserImageDetail(uid,value){
+    alert(uid);
     firebase.database().ref('Data/Users/'+uid).update({
         imageUrl:value,
     }).then((data)=>{
